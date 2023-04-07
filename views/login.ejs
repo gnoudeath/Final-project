@@ -1,5 +1,19 @@
 <%- include('partials/header'); -%>
 
-<h1>log in</h1>
+<form>
+    <h2>Login</h2>
+    <label for="account">Account</label>
+    <input type="text" name="account" required />
+    <div class="account error">
+
+    </div>
+    <label for="password">Password</label>
+    <input type="password" name="password" required />
+    <div class="password error">
+
+    </div>
+    <button>Sign up</button>
+</form>
+<script src="/js/login.js"></script>
 
 <%- include('partials/footer'); -%>
