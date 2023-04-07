@@ -1,5 +1,18 @@
 <%- include('partials/header'); -%>
 
-<h1>sign up</h1>
+<form >
+    <h2>Sign up</h2>
+    <label for="account">Account</label>
+    <input type="text" name="account" required />
+    <div class="account error">
+
+    </div>
+    <label for="password">Password</label>
+    <input type="password" name="password" required />
+    <div class="password error">
+
+    </div>
+    <button>Sign up</button>
+</form>
 
 <%- include('partials/footer'); -%>

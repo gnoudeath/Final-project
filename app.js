@@ -1,4 +1,6 @@
 const mongoose = require('mongoose');
+const dotenv = require("dotenv");
+dotenv.config();
 const express = require('express');
 const authRouters = require('./routes/authRouters');
 
@@ -6,14 +8,18 @@ const app = express();
 
 // middleware
 app.use(express.static('public'));
+app.use('/bootstrap', express.static(__dirname + 'public/bootstrap'));
+app.use('/css', express.static(__dirname + 'public/css'));
+app.use('/img', express.static(__dirname + 'public/img'));
+app.use('/js', express.static(__dirname + 'public/js'));
 
 // view engine
 app.set('view engine', 'ejs');
 
 // database connection
-const dbURI = 'mongodb+srv://project:duongntgch190718@project.8cuvkmb.mongodb.net/test';
-mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
-  .then((result) => app.listen(3000))
+const database = process.env.MONGO_DB;
+mongoose.connect(database, { useNewUrlParser: true, useUnifiedTopology: true })
+  .then(() => console.log("http://localhost:3000"))
   .catch((err) => console.log(err));
 
 // router
