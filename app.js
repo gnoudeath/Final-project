@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const express = require('express');
+const authRouters = require('./routes/authRouters');
 
 const app = express();
 
@@ -15,6 +16,7 @@ mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
   .then((result) => app.listen(3000))
   .catch((err) => console.log(err));
 
-  // router
-  app.get('/', (req, res) => res.render('home'));
-  app.get('/smoothies', (req, res) =>res.render('smoothies'));
+// router
+app.get('/', (req, res) => res.render('home'));
+app.get('/smoothies', (req, res) =>res.render('smoothies'));
+app.use(authRouters);
