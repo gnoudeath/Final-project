@@ -5,7 +5,7 @@ const express = require('express');
 const authRouters = require('./routes/authRouters');
 var path = require('path');
 const cookieParser = require('cookie-parser');
-const { requireAuth } = require('./middleware/authMiddleware')
+const { requireAuth, checkUser } = require('./middleware/authMiddleware')
 const app = express();
 
 // view engine
@@ -31,6 +31,7 @@ mongoose
   .catch((err) => console.log(err));
 
 // router
+app.get('*', checkUser);
 app.get('/', (req, res) => res.render('home'));
 app.get('/smoothies', requireAuth, (req, res) =>res.render('smoothies'));
 app.use(authRouters);
