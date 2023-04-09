@@ -1,4 +1,5 @@
-const User = require('../models/User');
+const User  = require('../models/User');
+const Role  = require('../models/Role');
 const jwt = require('jsonwebtoken');
 
 // handle errors
@@ -56,7 +57,8 @@ module.exports.signup_post = async (req, res) => {
     const {account, password, userName, email, phone} = req.body;   
 
     try {
-        const user = await User.create({account, password, userName, email, phone});
+        const customerRole = await Role.findOne({roleName: "customer"}); // Tìm role customer trong database
+        const user = await User.create({account, password, userName, email, phone, role: customerRole._id}); // Tạo user với role là ObjectId của role customer
         const token = createToken(user._id);
         res.cookie('jwt', token, {httpOnly: true, maxAge: maxAge * 1000});
         res.status(201).json({user:  user._id});

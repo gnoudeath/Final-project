@@ -29,13 +29,11 @@ const userSchema = new mongoose.Schema({
         required: [true, 'Please enter your phone number'],
         match: [/^[0-9]{9,10}$/, 'Please enter a valid phone number'],
     },
+    role: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'role',
+    }
 });
-
-// // fire a function after doc saved to database
-// userSchema.post('save', function (doc, next) {
-//     console.log('new user was created & saved', doc);
-//     next();
-// });
 
 // fire a function before doc saved to database
 userSchema.pre('save', async function (next) {
@@ -58,5 +56,13 @@ userSchema.statics.login = async function(account, password) {
 }
 
 const User = mongoose.model('user', userSchema);
+
+// const roleSchema = new mongoose.Schema ({
+//     roleName: {
+//         type: String
+//     }
+// })
+
+// const Role = mongoose.model('role', roleSchema);
 
 module.exports = User;
