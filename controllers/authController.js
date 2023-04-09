@@ -1,16 +1,21 @@
 const User = require('../models/User');
+const jwt = require('jsonwebtoken');
 
 // handle errors
 const handleErros = (err) => {
     console.log(err.message, err.code);
-    let errors = { account: '', password: '', userName: '', email: '', phone: ''};
+    let errors = { account: '', password: '', email: '', phone: ''};
 
     //duplicate error code
     if (err.code === 11000) {
-        errors.email = 'that mail is already registered';
-        errors.account = 'that account is already registered';
+        if (err.keyPattern && err.keyPattern.account) {
+            errors.account = 'That account is already registered';
+        }
+        if (err.keyPattern && err.keyPattern.email) {
+            errors.email = 'That email is already registered';
+        }
         return errors;
-    }
+    }     
 
     // validation errors
     if (err.message.includes('user validation failed')) {
@@ -22,6 +27,13 @@ const handleErros = (err) => {
     return errors;
 };
 
+const maxAge = 3 * 24 * 60 * 60;
+const createToken = (id) => {
+    return jwt.sign({ id }, 'account secret', {
+        expiresIn: maxAge
+    });
+}
+
 module.exports.signup_get = (req, res) => {
     res.render('signup');
 }
@@ -31,11 +43,13 @@ module.exports.login_get = (req, res) => {
 }
 
 module.exports.signup_post = async (req, res) => {
-    const {account, password, userName, email, phone} = req.body;
+    const {account, password, userName, email, phone} = req.body;   
 
     try {
         const user = await User.create({account, password, userName, email, phone});
-        res.status(201).json(user);
+        const token = createToken(user._id);
+        res.cookie('jwt', token, {httpOnly: true, maxAge: maxAge * 1000});
+        res.status(201).json({user:  user._id});
     } catch (err) {
         const errors = handleErros(err);
         res.status(400).json({ errors });
@@ -43,9 +57,12 @@ module.exports.signup_post = async (req, res) => {
 }
 
 module.exports.login_post = async (req, res) => {
-    const {account, password, userName, email, phone} = req.body;
+    const {account, password} = req.body;
 
-    console.log(account, password, userName, email, phone);
-
-    res.send('user login');
+    try {
+        const user = await User.login(account, password);
+        res.status(200).json({ user: user._id });
+    } catch (err) {
+        res.status(400).json({});
+    }
 }
