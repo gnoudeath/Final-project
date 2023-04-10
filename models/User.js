@@ -57,12 +57,4 @@ userSchema.statics.login = async function(account, password) {
 
 const User = mongoose.model('user', userSchema);
 
-// const roleSchema = new mongoose.Schema ({
-//     roleName: {
-//         type: String
-//     }
-// })
-
-// const Role = mongoose.model('role', roleSchema);
-
 module.exports = User;
