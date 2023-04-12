@@ -1,6 +1,8 @@
-const mongoose = require('mongoose');
-const dotenv = require("dotenv");
-dotenv.config();
+// dotenv
+require("dotenv").config;
+// connecy DB
+const {connectDB} = require('./config/db');
+connectDB();
 const express = require('express');
 const authRouters = require('./routes/authRouters');
 var path = require('path');
@@ -23,18 +25,14 @@ app.use(express.json());
 
 app.use(cookieParser());
 
-// database connection
-const database = process.env.MONGO_DB;
-mongoose
-  .connect(database, { useNewUrlParser: true, useUnifiedTopology: true })
-  .then(() => console.log("http://localhost:3000"))
-  .catch((err) => console.log(err));
+
 
 // router
 app.get('*', checkUser);
 app.get('/', (req, res) => res.render('home'));
 app.get('/smoothies', requireAuth, (req, res) =>res.render('smoothies'));
 app.use(authRouters);
+
 
 // cookies
 app.get('/set-cookies', (req, res) => {
@@ -56,6 +54,5 @@ app.get('/read-cookies', (req, res) => {
 
 
 //Port
-const PORT = process.env.PORT || 3000;
-
-app.listen(PORT, console.log("Server has started at port " + PORT));
+const port = process.env.APP_PORT;
+app.listen(port, console.log("Server has started at port " + port));
