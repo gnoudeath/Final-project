@@ -10027,3 +10027,42 @@ h6,
 .noidung-cl div {
   margin-left: auto;
 }
+
+.nav-baihoc, .baihoc1, .baihoc2, .baihoc3, .baihoc4 {
+  padding: 10px;
+  border-radius: 10px;
+}
+/* .tonghop-tatca {
+  max-width: auto;
+} */
+.nav-baihoc > *:first-child {
+  margin-top: 0;
+}
+.baihoc h6 {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.span-baihoc {
+  float: right;
+}
+.baihoc1, .baihoc2, .baihoc3, .baihoc4 {
+  background-color: #f5f5f5;
+}
+
+.time-baihoc {
+  float: right;
+}
+
+.tonghop-baihoc {
+  display: none;
+  margin-left: 30px;
+  width: 870px;
+}
+.tonghop-baihoc.active {
+  display: block;
+}
+
+
+
+
