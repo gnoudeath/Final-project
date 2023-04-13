@@ -10092,6 +10092,25 @@ h6,
   max-width: 58.33333%;
   margin-left: 85px;
 }
+.col-lg-7-11 {
+  flex: 0 0 58.33333%;
+  margin-left: -15px;
+}
+.col-lg-7-12 {
+  flex: 0 0 58.33333%;
+  margin-bottom: 220px;
+}
+.navhear {
+  text-align: center;
+}
+.row-course {
+  margin-bottom: 360px;
+}
+.noidung-course {
+  margin-left: 40px;
+  margin-top: 40px;
+}
+
 
 
 

@@ -34,5 +34,8 @@ router.get('/single', (req, res) => {
 router.get('/course-detail', (req, res) => {
     res.render('course-detail');
 })
+router.get('/course-learning', (req, res) => {
+    res.render('course-learning');
+})
 
 module.exports = router;
