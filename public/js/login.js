@@ -30,7 +30,7 @@ form.addEventListener('submit', async (e) => {
       }
     }
     if (data.user) {
-      if (data.user.role === 'admin') {
+      if (account === 'admin') {
         location.assign('/admin');
       } else {
         location.assign('/');

@@ -29,9 +29,8 @@ app.use(express.json());
 app.use(cookieParser());
 
 // các route khác
-
 app.get('*', checkUser);
-app.get('/', (req, res) => res.render('home'));
+app.get('/', (req, res) => res.render('index'));
 // app.get('/', requireAuth, (req, res) =>res.render('home'));
 app.use(authRouters);
 
