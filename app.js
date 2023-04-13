@@ -28,39 +28,11 @@ app.use(express.json());
 
 app.use(cookieParser());
 
-
-
-// // Phân quyền cho trang smoothies cho customer
-// app.get('/smoothies', requireAuth, checkUser, (req, res) => {
-//   if (res.locals.role === 'customer') {
-//     res.render('customer-smoothies');
-//   } else {
-//     res.redirect('/');
-//   }
-// });
-
-// // Phân quyền cho trang smoothies cho admin
-// app.get('/admin/smoothies', requireAuth, checkUser, (req, res) => {
-//   if (res.locals.role === 'admin') {
-//     res.render('admin-smoothies');
-//   } else {
-//     res.redirect('/');
-//   }
-// });
-
-// // Phân quyền cho trang admin
-// app.get('/admin', requireAuth, checkUser, (req, res) => {
-//   if (res.locals.role === 'admin') {
-//     res.render('admin');
-//   } else {
-//     res.redirect('/');
-//   }
-// });
-
 // các route khác
+
 app.get('*', checkUser);
 app.get('/', (req, res) => res.render('home'));
-// app.get('/index', requireAuth, (req, res) =>res.render('index'));
+// app.get('/', requireAuth, (req, res) =>res.render('home'));
 app.use(authRouters);
 
 
