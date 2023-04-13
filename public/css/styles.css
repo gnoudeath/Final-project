@@ -10031,12 +10031,7 @@ h6,
 .nav-baihoc, .baihoc1, .baihoc2, .baihoc3, .baihoc4 {
   padding: 10px;
   border-radius: 10px;
-}
-/* .tonghop-tatca {
-  max-width: auto;
-} */
-.nav-baihoc > *:first-child {
-  margin-top: 0;
+  margin-bottom: -5px;
 }
 .baihoc h6 {
   display: flex;
@@ -10062,6 +10057,43 @@ h6,
 .tonghop-baihoc.active {
   display: block;
 }
+
+.noidung-baihoc {
+  padding: 10px;
+}
+.morongvathunho .thunho-tatca {
+  display: none;
+}
+.col-lg-5-10 {
+  display: inline-flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: -10px;
+  margin-left: 70px;
+}
+
+.dangky-btn {
+  background-color: var(--primary);
+  border-radius: 20px;
+  color: white;
+  margin-top: 10px;
+}
+.ul-dangky{
+  margin-top: 10px;
+}
+.mp-h5 {
+  font-size: 33px;
+  color: var(--primary);
+  margin-top: 10px;
+}
+.col-lg-7-10 {
+  flex: 0 0 58.33333%;
+  max-width: 58.33333%;
+  margin-left: 85px;
+}
+
+
 
 
 
