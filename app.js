@@ -7,7 +7,7 @@ const express = require('express');
 const authRouters = require('./routes/authRouters');
 var path = require('path');
 const cookieParser = require('cookie-parser');
-const { requireAuth, checkUser } = require('./middleware/authMiddleware')
+const { checkUser, requireAuth } = require('./middleware/authMiddleware')
 const app = express();
 
 // view engine
@@ -21,17 +21,48 @@ app.use('/bootstrap', express.static(__dirname + '/public/bootstrap'));
 app.use('/css', express.static(__dirname + '/public/css'));
 app.use('/img', express.static(__dirname + '/public/img'));
 app.use('/js', express.static(__dirname + '/public/js'));
+app.use('/scss', express.static(__dirname + '/public/scss'));
+app.use('/mail', express.static(__dirname + '/public/js'));
+app.use('/lib', express.static(__dirname + '/public/js'));
 app.use(express.json());
 
 app.use(cookieParser());
 
 
 
-// router
+// // Phân quyền cho trang smoothies cho customer
+// app.get('/smoothies', requireAuth, checkUser, (req, res) => {
+//   if (res.locals.role === 'customer') {
+//     res.render('customer-smoothies');
+//   } else {
+//     res.redirect('/');
+//   }
+// });
+
+// // Phân quyền cho trang smoothies cho admin
+// app.get('/admin/smoothies', requireAuth, checkUser, (req, res) => {
+//   if (res.locals.role === 'admin') {
+//     res.render('admin-smoothies');
+//   } else {
+//     res.redirect('/');
+//   }
+// });
+
+// // Phân quyền cho trang admin
+// app.get('/admin', requireAuth, checkUser, (req, res) => {
+//   if (res.locals.role === 'admin') {
+//     res.render('admin');
+//   } else {
+//     res.redirect('/');
+//   }
+// });
+
+// các route khác
 app.get('*', checkUser);
 app.get('/', (req, res) => res.render('home'));
-app.get('/smoothies', requireAuth, (req, res) =>res.render('smoothies'));
+// app.get('/index', requireAuth, (req, res) =>res.render('index'));
 app.use(authRouters);
+
 
 
 // cookies

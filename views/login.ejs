@@ -1,19 +1,21 @@
 <%- include('partials/header'); -%>
-
-<form>
-    <h2>Login</h2>
-    <label for="account">Account</label>
-    <input type="text" name="account" required />
-    <div class="account error">
-
-    </div>
-    <label for="password">Password</label>
-    <input type="password" name="password" required />
-    <div class="password error">
-
-    </div>
-    <button class="btn-l">Log in</button>
-</form>
+<div class="backgourdimg">
+    <form>
+        <h2 style="color: coral;text-align: center;">Login</h2>
+        <label for="account">Account</label>
+        <input type="text" name="account" required />
+        <div class="account error">
+    
+        </div>
+        <label for="password">Password</label>
+        <input type="password" name="password" required />
+        <div class="password error">
+    
+        </div>
+        <button class="btn-l">Log in</button>
+        <a href="/signup" class="btn">Sign up</a>
+    </form>
+</div>
 <script src="/js/login.js"></script>
 
 <%- include('partials/footer'); -%>

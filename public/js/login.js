@@ -30,8 +30,12 @@ form.addEventListener('submit', async (e) => {
       }
     }
     if (data.user) {
-      location.assign('/');
-    } 
+      if (data.user.role === 'admin') {
+        location.assign('/admin');
+      } else {
+        location.assign('/');
+      }
+    }    
   }
   catch (err) {
     console.log(err);

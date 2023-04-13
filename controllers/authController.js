@@ -70,7 +70,6 @@ module.exports.signup_post = async (req, res) => {
 
 module.exports.login_post = async (req, res) => {
         const { account, password } = req.body;
-    
         try {
         const user = await User.login(account, password);
         const role = await Role.findById(user.role);
