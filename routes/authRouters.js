@@ -31,5 +31,8 @@ router.get('/contact', (req, res) => {
 router.get('/single', (req, res) => {
     res.render('single');
 })
+router.get('/course-detail', (req, res) => {
+    res.render('course-detail');
+})
 
 module.exports = router;

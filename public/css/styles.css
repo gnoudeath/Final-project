@@ -671,7 +671,7 @@ pre code {
 
 @media (min-width: 1200px) {
   .container, .container-sm, .container-md, .container-lg, .container-xl {
-    max-width: 1140px;
+    max-width: 1640px;
   }
 }
 
@@ -9999,4 +9999,31 @@ h6,
   margin: 0;
   padding: 0;
   list-style-type: none;
+}
+
+.noidung-cl {
+  display: flex;
+  justify-content: left;
+  align-items: center;
+}
+
+.noidung-cl ul {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.noidung-cl ul strong {
+  font-weight: bold;
+  margin-right: 5px;
+  flex-basis: 10px; /* định nghĩa kích thước cố định cho phần tử con */
+}
+
+.noidung-cl ul li {
+  margin-right: 20px;
+}
+
+.noidung-cl div {
+  margin-left: auto;
 }
