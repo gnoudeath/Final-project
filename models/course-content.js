@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-const courseContent = new Schema ({
+const courseContentSchema = new Schema ({
     nameCourseContent: {
         type: String, maxLength: 255
     },
@@ -17,4 +17,6 @@ const courseContent = new Schema ({
     }
 });
 
-module.exports = mongoose.model('courseContent', courseContent);
+const CourseContent = mongoose.model('lecture', courseContentSchema);
+
+module.exports = CourseContent;

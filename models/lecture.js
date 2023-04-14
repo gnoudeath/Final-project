@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-const lecture = new Schema ({
+const lectureSchema = new Schema ({
     namelecture: {
         type: String, maxLength: 255
     },
@@ -16,5 +16,6 @@ const lecture = new Schema ({
         type: Date, default: Date.now,
     }
 });
+const Lecture = mongoose.model('lecture', lectureSchema);
 
-module.exports = mongoose.model('lecture', lecture);
+module.exports = Lecture;

@@ -1,19 +1,23 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-const Course = new Schema ({
+const courseSchema = new Schema ({
     nameCourse: {
-        type: String, maxLength: 255
+        type: String, maxLength: 255,
+        require: true,
     },
     descriptionCourse: {
-        type: String, maxLength: 600
+        type: String, maxLength: 600,
+        require: true,
     
     },
     imageCourse: {
-        type: String, maxLength: 255
+        type: String, maxLength: 255,
+        require: true,
     },
     costCourse: {
-        type: String
+        type: String,
+        require: true,
     },
     createdAtCourse: {
         type: Date, default: Date.now,
@@ -22,5 +26,6 @@ const Course = new Schema ({
         type: Date, default: Date.now,
     }
 });
+const Course = mongoose.model('course', courseSchema);
 
-module.exports = mongoose.model('Course', Course);
+module.exports = Course;
