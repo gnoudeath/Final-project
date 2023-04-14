@@ -5,6 +5,7 @@ const {connectDB} = require('./config/db');
 connectDB();
 const express = require('express');
 const authRouters = require('./routes/authRouters');
+const coursesRouters = require('./routes/coursesRouters');
 var path = require('path');
 const cookieParser = require('cookie-parser');
 const { checkUser, requireAuth } = require('./middleware/authMiddleware')
@@ -30,9 +31,10 @@ app.use(cookieParser());
 
 // các route khác
 app.get('*', checkUser);
-app.get('/', (req, res) => res.render('index'));
+app.get('/', (req, res) => res.render('home'));
 // app.get('/', requireAuth, (req, res) =>res.render('home'));
 app.use(authRouters);
+app.use(coursesRouters);
 
 
 

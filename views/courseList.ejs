@@ -1,0 +1,61 @@
+<%- include('partials/header-course'); -%>
+
+
+<!-- Main Site -->
+
+<main id="site-main">
+    <div class="container">
+        <div class="box-nav d-flex justify-between">
+            <a href="newCourse" class="boder-shadow">
+                <span class="text-gradient">
+                    New Course <i class="fa-solid fa-book-open"></i>
+                </span>
+            </a>
+        </div>
+
+        <!-- form handling -->
+        <form action="/" method="POST">
+            <table class="table">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>ID</th>
+                        <th>Name Course</th>
+                        <th class="td-max-d">Description</th>
+                        <th>Image</th>
+                        <th>Course Price</th>
+                        <th>Create time</th>
+                        <th>Update time</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>Lập trình C++ cơ bản, nâng cao</td>
+                        <td class="td-max-d">Khóa học lập trình C++ từ cơ bản tới nâng cao dành cho người mới bắt đầu. 
+                            Mục tiêu của khóa học này nhằm giúp các bạn nắm được các khái niệm căn cơ của lập trình, 
+                            giúp các bạn có nền tảng vững chắc để chinh phục con đường trở thành một lập trình viên.</td>
+                        <td></td>
+                        <td>Miễn Phí</td>
+                        <td>8:39 4/14/2023</td>
+                        <td>8:39 4/14/2023</td>
+                        <td>
+                            <a href="update-course" class="btn border-shadow update">
+                                <span class="text-gradient"><i class="fas fa-pencil-alt"></i></span>
+                            </a>
+                            <a class="btn border-shadow delete">
+                                <span class="text-gradient"><i class="fa-solid fa-trash"></i></span>
+                            </a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </form>
+    </div>
+</main>
+
+<!-- End Main Site -->
+
+
+
+<%- include('partials/footer-course'); -%>

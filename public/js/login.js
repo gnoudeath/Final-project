@@ -31,7 +31,7 @@ form.addEventListener('submit', async (e) => {
     }
     if (data.user) {
       if (account === 'admin') {
-        location.assign('/admin');
+        location.assign('/dashboard');
       } else {
         location.assign('/');
       }
