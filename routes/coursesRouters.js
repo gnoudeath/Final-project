@@ -8,10 +8,9 @@ const courseController = require('../controllers/courseController');
 
 // router.get('/create', courseController.create);
 
+router.get('/courseList', checkRole('admin'), services.courseList)
 
 router.get('/newCourse', checkRole('admin'), services.newCourse)
-
-router.get('/courseList', checkRole('admin'), services.courseList)
 
 router.get('/update-course', checkRole('admin'), services.updateCourse)
 

@@ -1,4 +1,3 @@
-const { query } = require('express');
 const Course = require('../models/courses');
 
 // create and save new course
@@ -52,10 +51,10 @@ exports.findCourse  = (req, res) => {
     } else {
     Course.find()
     .then(course => {
-        res.send(user)
+        res.send(course)
     })
     .catch(err => {
-        res.status(500).send({message: err.message || "Error Occured while retriving user information"})
+        res.status(500).send({message: err.message || "Error Occured while retriving course information"})
     })
     }
 }
@@ -82,7 +81,7 @@ exports.updateCourse  = (req, res) => {
         })
 }
 
-// Delete a user with specified user id in the request
+// Delete a course with specified course id in the request
 exports.deleteCourse  = (req, res) => {
     const id = req.params.id;
 
