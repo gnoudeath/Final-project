@@ -4,34 +4,35 @@ const Course = require('../models/courses');
 exports.createCourse = (req, res) => {
     // validate request
     if (!req.body) {
-        res.status(400).send({message: "Content can not be emtpy!"});
+        res.status(400).send({ message: "Content can not be emtpy!" });
         return;
     }
-
     // new courses
+    const formData = req.body;
+    formData.imageCourse = `https://img.youtube.com/vi/${req.body.videoIdCourse}/sddefault.jpg`;
     const course = new Course({
-        nameCourse: req.body.nameCourse,
-        descriptionCourse: req.body.descriptionCourse,
-        imageCourse: req.body.imageCourse,
-        costCourse: req.body.costCourse
-    })
+        nameCourse: formData.nameCourse,
+        descriptionCourse: formData.descriptionCourse,
+        imageCourse: formData.imageCourse,
+        videoIdCourse: formData.videoIdCourse,
+        costCourse: formData.costCourse
+    });
 
     // save course in the database
-    course
-        .save(course)
+    course.save()
         .then(data => {
-            res.send(data)
+            res.redirect('/courseList')
         })
         .catch(err => {
+            console.log(err);
             res.status(500).send({
                 message: err.message || "Some err occurred while creating a create operation"
             });
         });
-
 }
 
 //retrieve and return all courses/retrive and return a single course
-exports.findCourse  = (req, res) => {
+exports.findCourse = (req, res) => {
 
     if (req.query.id) {
         const id = req.query.id;
@@ -39,56 +40,59 @@ exports.findCourse  = (req, res) => {
         Course.findById(id)
             .then(data => {
                 if (!data) {
-                    res.status(404).send({message: "Not found course with id" +id})
+                    res.status(404).send({ message: "Not found course with id" + id })
                 } else {
                     res.send(data)
                 }
             })
             .catch(err => {
-                res.status(500).send({message: "Erro retrieving course with id" +id})
+                res.status(500).send({ message: "Erro retrieving course with id" + id })
             })
 
     } else {
-    Course.find()
-    .then(course => {
-        res.send(course)
-    })
-    .catch(err => {
-        res.status(500).send({message: err.message || "Error Occured while retriving course information"})
-    })
+        Course.find()
+            .then(course => {
+                res.send(course)
+            })
+            .catch(err => {
+                res.status(500).send({ message: err.message || "Error Occured while retriving course information" })
+            })
     }
 }
 
 //Update a new idetied course by course id
-exports.updateCourse  = (req, res) => {
+exports.updateCourse = (req, res) => {
     if (!req.body) {
         return res
             .status(400)
-            .send({message: "Data to update can not be empty"})
+            .send({ message: "Data to update can not be empty" })
     }
 
     const id = req.params.id;
-    Course.findByIdAndUpdate(id.req.body, {useFindAndModify:false})
+    const formData = req.body;
+    formData.imageCourse = `https://img.youtube.com/vi/${req.body.videoIdCourse}/sddefault.jpg`;
+    Course.findByIdAndUpdate(id, formData, { useFindAndModify: false })
         .then(data => {
-            if(!data) {
-                res.status(400).send({message: 'Cannot Update course with ${id}. May be course not found!'})
+            if (!data) {
+                res.status(404).send({ message: `Cannot Update course with ${id}. May be course not found!` })
             } else {
-                res.send(data)
+                res.send(data);
             }
         })
         .catch(err => {
-            res.status(500).send({message: "Error Update course information"})
+            res.status(500).send({ message: "Error Update course information" })
         })
 }
 
+
 // Delete a course with specified course id in the request
-exports.deleteCourse  = (req, res) => {
+exports.deleteCourse = (req, res) => {
     const id = req.params.id;
 
     Course.findByIdAndDelete(id)
         .then(data => {
             if (!data) {
-                res.status(404).send({message: 'Cannot Delete with id ${id}. May be id is wrong'})
+                res.status(404).send({ message: 'Cannot Delete with id ${id}. May be id is wrong' })
             } else {
                 res.send({
                     message: "Course was deleted successfuly!"

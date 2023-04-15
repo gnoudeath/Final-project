@@ -1,11 +1,10 @@
 const axios = require('axios');
 
 exports.courseList = (req, res) => {
-    // res.render('courseList',{courses: "New Data"});
     axios.get('http://localhost:3000/api/courses')
         .then(function(response){
-            console.log(response)
-            res.render('courseList',{courses: response.data});
+            // console.log(response)
+            res.render('admin/courses/courseList', {courses: response.data});
         })
         .catch(err =>{
             res.send(err);
@@ -13,14 +12,15 @@ exports.courseList = (req, res) => {
 }
 
 exports.newCourse = (req, res) => {
-    res.render('newCourse');
-}
-
-
-exports.updateCourse = (req, res) => {
-    res.render('update-course');
+    res.render('admin/courses/newCourse');
 }
 
 exports.updateCourse = (req, res) => {
-    res.render('update-course');
+    axios.get('http://localhost:3000/api/courses',{params: {id:req.query.id}})
+        .then(function(coursedata) {
+            res.render("admin/courses/update-course",{courses:coursedata.data})
+        })
+        .catch(err => {
+            res.send(err);
+        })
 }

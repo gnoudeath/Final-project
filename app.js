@@ -6,14 +6,22 @@ connectDB();
 const express = require('express');
 const authRouters = require('./routes/authRouters');
 const coursesRouters = require('./routes/coursesRouters');
+const bodyparser = require("body-parser");
 var path = require('path');
 const cookieParser = require('cookie-parser');
 const { checkUser, requireAuth } = require('./middleware/authMiddleware')
 const app = express();
 
+const expressElayouts = require('express-ejs-layouts');
+
 // view engine
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
+app.set('layout', './layout/share-Layout');
+app.use(expressElayouts);
+// parse request to body-parser
+app.use(bodyparser.urlencoded({ extended : true}))
+
 
 
 // middleware
@@ -26,6 +34,7 @@ app.use('/scss', express.static(__dirname + '/public/scss'));
 app.use('/mail', express.static(__dirname + '/public/js'));
 app.use('/lib', express.static(__dirname + '/public/js'));
 app.use(express.json());
+
 
 app.use(cookieParser());
 

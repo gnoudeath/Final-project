@@ -1,0 +1,97 @@
+<!-- Main Site -->
+<main id="site-main">
+    <div class="container">
+        <div class="box-nav d-flex justify-between">
+            <a href="newCourse" class="boder-shadow">
+                <span class="text-gradient">
+                    New Course <i class="fa-solid fa-book-open"></i>
+                </span>
+            </a>
+        </div>
+
+        <!-- form handling -->
+        <form action="/" method="POST">
+            <table class="table">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>ID</th>
+                        <th>Name Course</th>
+                        <th class="td-max-d">Description</th>
+                        <th>Image</th>
+                        <th>Course Price</th>
+                        <th>Create time</th>
+                        <th>Update time</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% for (var i=0; i < courses.length; i++) { %>
+                        <tr>
+                            <td>
+                                <%= i + 1 %>
+                            </td>
+                            <td>
+                                <%= courses[i].nameCourse %>
+                            </td>
+                            <td class="td-max-d" style="text-align: justify;">
+                                <%= courses[i].descriptionCourse %>
+                            </td>
+                            <td>
+                                <img src="<%= courses[i].imageCourse %>" alt="Course image" width="100">
+                            </td>
+                            <td>
+                                <%= courses[i].costCourse %>
+                            </td>
+                            <td>
+                                <% if (courses[i].createdAt) { const date=new Date(courses[i].createdAt); const
+                                    formattedDate=new Intl.DateTimeFormat('en-US', { timeStyle: 'short' ,
+                                    dateStyle: 'short' }).format(date); %>
+                                    <%= formattedDate %>
+                                        <% } %>
+                            </td>
+                            <td>
+                                <% if (courses[i].updatedAt) { const date=new Date(courses[i].updatedAt); const
+                                    formattedDate=new Intl.DateTimeFormat('en-US', { timeStyle: 'short' ,
+                                    dateStyle: 'short' }).format(date); %>
+                                    <%= formattedDate %>
+                                        <% } %>
+                            </td>
+                            <td>
+                                <a href="update-course?id=<%= courses[i]._id%>" class="btn border-shadow update">
+                                    <span class="text-gradient"><i class="fas fa-pencil-alt"></i></span>
+                                </a>
+                                <a class="btn border-shadow delete" data-id=<%=courses[i]._id %>>
+                                    <span class="text-gradient"><i class="fa-solid fa-trash"></i></span>
+                                </a>
+                            </td>
+                        </tr>
+                        <% } %>
+                </tbody>
+            </table>
+
+        </form>
+    </div>
+</main>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        if (window.location.pathname == "/courseList") {
+            $ondelete = $(".table tbody td a.delete");
+            $ondelete.click(function () {
+                var id = $(this).attr("data-id")
+
+                var request = {
+                    "url": `http://localhost:3000/api/courses/${id}`,
+                    "method": "DELETE",
+                }
+
+                if (confirm("Do you really to delete this Course")) {
+                    $.ajax(request).done(function (response) {
+                        alert("Course Delete Successfully!!!");
+                        location.reload();
+                    })
+                }
+            })
+        }
+    });
+</script>
+<!-- End Main Site -->

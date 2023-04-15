@@ -24,14 +24,15 @@ const requireAuth = (req, res, next) => {
 // check current user
 const checkUser = (req, res, next) => {
     const token = req.cookies.jwt;
+    res.locals.user = null;
+    res.locals.role = null;
     if (token) {
         jwt.verify(token, 'account secret', async (err, decodedToken) => {
             if (err) {
                 console.log(err.message);
-                res.locals.user = null;
                 next();
             } else {
-                console.log(decodedToken);
+                // console.log(decodedToken);
                 let user = await User.findById(decodedToken.id).populate('role');
                 res.locals.user = user;
                 res.locals.role = user.role.roleName;
@@ -39,7 +40,6 @@ const checkUser = (req, res, next) => {
             }
         })
     } else {
-        res.locals.user = null;
         next();
     }
 }
@@ -47,7 +47,7 @@ const checkUser = (req, res, next) => {
 function checkRole(allowedRoles) {
     return async function (req, res, next) {
         const role = res.locals.role;
-        console.log(role)
+        // console.log(role)
         try {
             // Find the user's role in the Role table by objectId
             // let user = await User.findById(decodedToken.id).populate('role');

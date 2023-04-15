@@ -1,7 +1,8 @@
 const { Router } = require('express');
 const authController = require('../controllers/authController');
 const { checkRole } = require('../middleware/authMiddleware')
-
+const courseController = require('../controllers/courseController');
+const services = require('../services/renderCustomer');
 const router = Router();
 
 router.get('/signup', authController.signup_get);
@@ -14,58 +15,38 @@ router.get('/logout', authController.logout_get);
 
 // Section: Admin
 router.get('/dashboard', checkRole('admin'), (req, res) => {
-    res.render('dashboard');
+    res.render('admin/dashboard');
 });
 // Section: Customer
 router.get('/about', checkRole('customer'), (req, res) => {
-    res.render('about');
+    res.render('customer/about');
 });
-router.get('/course', checkRole('customer'), (req, res) => {
-    res.render('course');
-});
+// router.get('/course', checkRole('customer'), (req, res) => {
+//     res.render('customer/courses/course');
+// });
 router.get('/teacher', checkRole('customer'), (req, res) => {
-    res.render('teacher');
+    res.render('customer/teacher');
 });
 router.get('/blog', checkRole('customer'), (req, res) => {
-    res.render('blog');
+    res.render('customer/blog');
 });
 router.get('/contact', checkRole('customer'), (req, res) => {
-    res.render('contact');
+    res.render('customer/contact');
 });
 router.get('/single', checkRole('customer'), (req, res) => {
-    res.render('single');
+    res.render('customer/single');
 });
 router.get('/course-detail', checkRole('customer'), (req, res) => {
-    res.render('course-detail');
+    res.render('customer/courses/course-detail');
 });
 router.get('/course-learning', checkRole('customer'), (req, res) => {
-    res.render('course-learning');
+    res.render('customer/courses/course-learning', { layout: false });
 });
 
-
-// router.get('/about', (req, res) => {
-//     res.render('about');
-// })
-// router.get('/course', (req, res) => {
-//     res.render('course');
-// })
-// router.get('/teacher', (req, res) => {
-//     res.render('teacher');
-// })
-// router.get('/blog', (req, res) => {
-//     res.render('blog');
-// })
-// router.get('/contact', (req, res) => {
-//     res.render('contact');
-// })
-// router.get('/single', (req, res) => {
-//     res.render('single');
-// })
-// router.get('/course-detail', (req, res) => {
-//     res.render('course-detail');
-// })
-// router.get('/course-learning', (req, res) => {
-//     res.render('course-learning');
-// })
+// router.get('/course', checkRole('customer'), services.courseList, (req, res) => {
+//     res.render('customer/courses/course');
+// });
+router.get('/course', checkRole('customer'), services.courseList);
+router.get('/api/courses', courseController.findCourse);
 
 module.exports = router;
