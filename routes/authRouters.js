@@ -36,9 +36,6 @@ router.get('/contact', checkRole('customer'), (req, res) => {
 router.get('/single', checkRole('customer'), (req, res) => {
     res.render('customer/single');
 });
-router.get('/course-detail', checkRole('customer'), (req, res) => {
-    res.render('customer/courses/course-detail');
-});
 router.get('/course-learning', checkRole('customer'), (req, res) => {
     res.render('customer/courses/course-learning', { layout: false });
 });
@@ -47,6 +44,8 @@ router.get('/course-learning', checkRole('customer'), (req, res) => {
 //     res.render('customer/courses/course');
 // });
 router.get('/course', checkRole('customer'), services.courseList);
+router.get('/course-detail', checkRole('customer'), services.courseDetail);
+
 router.get('/api/courses', courseController.findCourse);
 
 module.exports = router;

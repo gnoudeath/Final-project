@@ -11,6 +11,17 @@ exports.courseList = (req, res) => {
         })
 }
 
+exports.courseDetail = (req, res) => {
+    axios.get('http://localhost:3000/api/courses',{params: {id:req.query.id}})
+        .then(function(response) {
+            res.render('customer/courses/course-detail', {courses: response.data});
+        })
+        .catch(err => {
+            res.send(err);
+        })
+}
+
+
 // exports.newCourse = (req, res) => {
 //     res.render('admin/courses/newCourse');
 // }

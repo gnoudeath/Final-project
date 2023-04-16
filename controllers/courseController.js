@@ -1,4 +1,6 @@
 const Course = require('../models/courses');
+const CourseContent = require('../models/coursesContent');
+const mongoose = require('mongoose');
 
 // create and save new course
 exports.createCourse = (req, res) => {
@@ -104,6 +106,68 @@ exports.deleteCourse = (req, res) => {
                 message: "Could not delete Course with id=" + id
             });
         })
+}
+
+
+// Course Content
+
+exports.createCourseContent = (req, res) => {
+    // validate request
+    if (!req.body) {
+        res.status(400).send({ message: "Content can not be empty!" });
+        return;
+    }
+    // new course content
+    const courseContent = new CourseContent({
+        nameCourseContent: req.body.nameCourseContent,
+        course: new mongoose.Types.ObjectId(req.body.id),
+    });
+
+    // save course content in the database
+    courseContent.save()
+        .then(data => {
+            res.redirect('/courseList')
+        })
+        .catch(err => {
+            console.log(err);
+            res.status(500).send({
+                message: err.message || "Some error occurred while creating a create operation"
+            });
+        });
+}
+
+exports.findCourseContent = (req, res) => {
+    if (req.query.id) {
+        const id = req.query.id;
+
+        CourseContent.findById(id)
+        .populate({
+            path: 'course',
+            select: 'nameCourse'
+        })
+        .then(data => {
+            if (!data) {
+                res.status(404).send({ message: "Not found course with id" + id })
+            } else {
+                console.log(data.course.nameCourse);
+                res.send(data)
+            }
+        })
+        .catch(err => {
+            res.status(500).send({ message: "Erro retrieving course with id" + id })
+        })
+
+    } else {
+        CourseContent.find()
+            .populate('course', 'nameCourse') // populate course name
+            .then(course => {
+                res.send(course)
+            })
+            .catch(err => {
+                console.log(data.course.nameCourse);
+                res.status(500).send({ message: err.message || "Error Occured while retriving course information" })
+            })
+    }
 }
 
 

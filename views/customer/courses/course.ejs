@@ -20,12 +20,12 @@
             <h5 class="text-primary text-uppercase mb-3" style="letter-spacing: 5px;">Courses</h5>
             <h1>Explore Top Courses</h1>
         </div>
-        <% courses.forEach(function(course) { %>
         <div class="row">
+        <% courses.forEach(function(course) { %>
             <div class="col-lg-3 col-md-6 mb-4">
                     <div class="cat-item position-relative overflow-hidden rounded mb-2">
                         <img class="img-fluid" src="<%= course.imageCourse %>" alt="">
-                        <a class="cat-overlay text-white text-decoration-none" href="course-detail">
+                        <a class="cat-overlay text-white text-decoration-none" href="course-detail?id=<%= course._id%>">
                             <h4 class="text-white font-weight-medium">
                                 <%= course.nameCourse %>
                             </h4>
@@ -33,8 +33,8 @@
                         </a>
                     </div>
             </div>
-        </div>
         <% }) %>
+        </div>
     </div>
     <!-- Category Start -->
 

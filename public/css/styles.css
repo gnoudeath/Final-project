@@ -1513,7 +1513,7 @@ pre code {
 
   .col-lg-3 {
     flex: 0 0 25%;
-    max-width: 25%;
+    max-width: 50%;
   }
 
   .col-lg-4 {
@@ -11094,6 +11094,7 @@ h6,
 
 .cat-item img {
   transition: .5s;
+  display: flex;
 }
 
 .cat-item:hover img {
@@ -11286,7 +11287,7 @@ h6,
   justify-content: center;
   align-items: center;
   margin-top: -10px;
-  margin-left: 70px;
+  float: left;
 }
 
 .dangky-btn {
@@ -11555,3 +11556,42 @@ tr {
   background-color: var(--dark);
   color: var(--boder);
 }
+
+
+/* .col-lg-7.d-flex {
+  margin-bottom: 350px;
+} */
+
+.container-1 {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center; /* canh giữa theo chiều ngang */
+  align-items: center; /* canh giữa theo chiều dọc */
+}
+
+.row-1 {
+  display: flex;
+  flex-wrap: wrap;
+  width: 85%;
+  flex-direction: row; /* đặt hướng cho trục chính */
+}
+
+.my-container {
+  flex-basis: 70%;
+  margin-right: auto;
+  margin: 0 auto;
+}
+
+.my-container1 {
+  flex-basis: 30%;
+  margin-left: auto;
+  align-self: center;
+  margin: 0 auto;
+}
+
+
+
+
+
+
+
