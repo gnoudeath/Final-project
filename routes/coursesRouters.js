@@ -22,10 +22,22 @@ router.delete('/api/courses/:id', courseController.deleteCourse);
 // Course Content
 router.get('/newCourseContent', checkRole('admin'), services.newCourseContent);
 router.get('/contentList', checkRole('admin'), services.contentList);
+router.get('/updateContent', checkRole('admin'), services.updateContent);
 
 // API Course Content
 router.post('/api/newCourseContent', courseController.createCourseContent);
-router.get('/api/contentList', courseController.findCourseContent)
+router.get('/api/contentList', courseController.findCourseContent);
+router.get('/api/content/',courseController.findContent)
 
+router.put('/api/updateContent/:id', courseController.updateContent);
+router.delete('/api/contentList/:id', courseController.deleteContent);
+
+
+// Lecture
+router.get('/newLecture', checkRole('admin'), services.newLecture);
+
+// API Lecture
+router.post('/api/newLecture', courseController.createLecture);
+    
 
 module.exports = router;

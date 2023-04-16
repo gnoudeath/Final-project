@@ -7,48 +7,36 @@
                 <thead class="thead-dark">
                     <tr>
                         <th>ID</th>
-                        <th>Name Course</th>
                         <th class="td-max-d">List Content</th>
-                        <th>Create time</th>
-                        <th>Update time</th>
                         <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
                     <% for (var i=0; i < courseContent.length; i++) { %>
-                      <tr>
-                        <td><%= i + 1 %></td>
-                        <td><%= courseContent[i].course.nameCourse %></td>
-                        <td class="td-max-d" style="text-align: justify;"><%= courseContent[i].nameCourseContent %></td>
-                        <td>
-                          <% if (courseContent[i].createdAt) { 
-                            const date=new Date(courseContent[i].createdAt);
-                            const formattedDate=new Intl.DateTimeFormat('en-US', { timeStyle: 'short', dateStyle: 'short' }).format(date); %>
-                            <%= formattedDate %>
-                          <% } %>
-                        </td>
-                        <td>
-                          <% if (courseContent[i].updatedAt) { 
-                            const date=new Date(courseContent[i].updatedAt);
-                            const formattedDate=new Intl.DateTimeFormat('en-US', { timeStyle: 'short', dateStyle: 'short' }).format(date); %>
-                            <%= formattedDate %>
-                          <% } %>
-                        </td>
-                        <td>
-                          <a href="newCourseContent?id=<%= courseContent[i]._id%>" class="btn border-shadow update">
-                            <span class="text-gradient"><i class="fa-brands fa-discourse"></i></span>
-                          </a>
-                          <a href="update-course?id=<%= courseContent[i]._id%>" class="btn border-shadow update">
-                            <span class="text-gradient"><i class="fas fa-pencil-alt"></i></span>
-                          </a>
-                          <a class="btn border-shadow delete" data-id=<%= courseContent[i]._id %>>
-                            <span class="text-gradient"><i class="fa-solid fa-trash"></i></span>
-                          </a>
-                        </td>
-                      </tr>
+                        <tr>
+                            <td>
+                                <%= i + 1 %>
+                            </td>
+                            <td class="td-max-d" style="text-align: justify;">
+                                <%= courseContent[i].nameCourseContent %>
+                            </td>
+                            <td>
+                                <a href="newCourseContent?id=<%= courseContent[i].course%>" class="btn border-shadow update">
+                                    <span class="text-gradient"><i class="fa-brands fa-discourse"></i></span>
+                                </a>
+                                <a href="updateContent?id=<%= courseContent[i]._id%>" class="btn border-shadow update">
+                                    <span class="text-gradient"><i class="fas fa-pencil-alt"></i></span>
+                                </a>
+                                <a class="btn border-shadow delete" data-id=<%=courseContent[i]._id %>>
+                                    <span class="text-gradient"><i class="fa-solid fa-trash"></i></span>
+                                </a>
+                                <a href="newLecture?id=<%= courseContent[i]._id%>" class="btn border-shadow update">
+                                    <span class="text-gradient"><i class="fa-brands fa-discourse"></i></span>
+                                </a>
+                            </td>
+                        </tr>
                     <% } %>
-                  </tbody>
-                  
+                </tbody>                          
             </table>
 
         </form>
@@ -56,19 +44,20 @@
 </main>
 <script>
     document.addEventListener("DOMContentLoaded", function () {
-        if (window.location.pathname == "/courseList") {
+        if (window.location.pathname == "/contentList") {
             $ondelete = $(".table tbody td a.delete");
             $ondelete.click(function () {
                 var id = $(this).attr("data-id")
+                // console.log(id)
 
                 var request = {
-                    "url": `http://localhost:3000/api/courses/${id}`,
+                    "url": `http://localhost:3000/api/contentList/${id}`,
                     "method": "DELETE",
                 }
 
-                if (confirm("Do you really to delete this Course")) {
+                if (confirm("Do you really to delete this Content")) {
                     $.ajax(request).done(function (response) {
-                        alert("Course Delete Successfully!!!");
+                        alert("Content Deleted Successfully!!!");
                         location.reload();
                     })
                 }

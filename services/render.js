@@ -36,15 +36,34 @@ exports.newCourseContent = (req, res) => {
 }
 
 exports.contentList = (req, res) => {
-    axios.get('http://localhost:3000/api/contentList')
+    // console.log(req.query.id);
+    axios.get('http://localhost:3000/api/contentList',{params: {id:req.query.id}})
         .then(function(response){
             res.render("admin/courses/contentList", {courseContent: response.data});
-            // console.log(response.data)
         })
         .catch(err =>{
             res.send(err);
         })
 }
 
+exports.updateContent = (req, res) => {
+    // console.log(req.query.id);
+    axios.get('http://localhost:3000/api/content',{params: {id:req.query.id}})
+        .then(function(contentdata) {
+            res.render("admin/courses/updateContent",{contentList:contentdata.data})
+        })
+        .catch(err => {
+            res.send(err);
+        })
+}
 
 // End Course Conten
+
+
+// Lecture
+
+exports.newLecture = (req, res) => {
+    res.render('admin/courses/newLecture', {id:req.query.id});
+}
+
+// End Lecture
