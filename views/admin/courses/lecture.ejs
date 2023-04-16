@@ -7,32 +7,44 @@
                 <thead class="thead-dark">
                     <tr>
                         <th>ID</th>
-                        <th class="td-max-d">List Content</th>
+                        <th class="td-max-d">Name Lecture</th>
+                        <th>Content Lecture</th>
+                        <th>Video ID</th>
+                        <th>Note Lecture</th>
                         <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <% for (var i=0; i < courseContent.length; i++) { %>
+                    <% for (var i=0; i < lectureContent.length; i++) { %>
                         <tr>
                             <td>
                                 <%= i + 1 %>
                             </td>
                             <td class="td-max-d" style="text-align: justify;">
-                                <%= courseContent[i].nameCourseContent %>
+                                <%= lectureContent[i].nameLecture %>
                             </td>
                             <td>
-                                <a href="newCourseContent?id=<%= courseContent[i].course%>" class="btn border-shadow update">
+                                <%= lectureContent[i].contentLecture %>
+                            </td>
+                            <td>
+                                <%= lectureContent[i].VideoId %>
+                            </td>
+                            <td>
+                                <%= lectureContent[i].noteLecture %>
+                            </td>
+                            <td>
+                                <a href="newLecture?id=<%= lectureContent[i].CourseContent%>" class="btn border-shadow update">
                                     <span class="text-gradient"><i class="fa-brands fa-discourse"></i></span>
                                 </a>
-                                <a href="updateContent?id=<%= courseContent[i]._id%>" class="btn border-shadow update">
+                                <a href="updateLecture?id=<%= lectureContent[i]._id%>" class="btn border-shadow update">
                                     <span class="text-gradient"><i class="fas fa-pencil-alt"></i></span>
                                 </a>
-                                <a class="btn border-shadow delete" data-id=<%=courseContent[i]._id %>>
+                                <a class="btn border-shadow delete" data-id=<%=lectureContent[i]._id %>>
                                     <span class="text-gradient"><i class="fa-solid fa-trash"></i></span>
                                 </a>
-                                <a href="lecture?id=<%= courseContent[i]._id%>" class="btn border-shadow update">
+                                <!-- <a href="lectureList?id=<%= lectureContent[i]._id%>" class="btn border-shadow update">
                                     <span class="text-gradient"><i class="fa-brands fa-discourse"></i></span>
-                                </a>
+                                </a> -->
                             </td>
                         </tr>
                     <% } %>
@@ -44,14 +56,14 @@
 </main>
 <script>
     document.addEventListener("DOMContentLoaded", function () {
-        if (window.location.pathname == "/contentList") {
+        if (window.location.pathname == "/lecture") {
             $ondelete = $(".table tbody td a.delete");
             $ondelete.click(function () {
                 var id = $(this).attr("data-id")
                 // console.log(id)
 
                 var request = {
-                    "url": `http://localhost:3000/api/contentList/${id}`,
+                    "url": `http://localhost:3000/api/lecture/${id}`,
                     "method": "DELETE",
                 }
 

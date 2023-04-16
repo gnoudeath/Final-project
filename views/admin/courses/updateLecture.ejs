@@ -1,0 +1,63 @@
+<!-- Main Site -->
+<main id="site-main">
+    <div class="container">
+        <div class="form-title text-center">
+            <h2 class="text-dark">Update Content</h2>
+        </div>
+        <!-- form handling -->
+        <form method="POST" id="update_content">
+            <div class="add_course">
+                <div class="form-group">
+                    <label for="nameLecture" class="text-dark">Name Lecture</label>
+                    <input type="hidden" name="id" value="<%= lectureContent._id %>">
+                    <input type="text" name="nameLecture" value="<%= lectureContent.nameLecture %>">
+                </div>
+                <div class="form-group">
+                    <label for="exampleFormControlTextarea1">Content Lecture</label>
+                    <textarea class="form-control" name="contentLecture" id="exampleFormControlTextarea1" rows="6"
+                        value="<%= lectureContent.contentLecture %>"><%= lectureContent.contentLecture %></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="VideoId" class="text-dark">Video ID</label>
+                    <input type="text" name="VideoId" value="<%= lectureContent.VideoId %>">
+                </div>
+                <div class="form-group">
+                    <label for="noteLecture" class="text-dark">Note Lecture</label>
+                    <input type="text" name="noteLecture" value="<%= lectureContent.noteLecture %>">
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-dark update" style="width: 100%; background-color: #20c997;">Save</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</main>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        $("#update_content").submit(function (event) {
+            event.preventDefault();
+
+            var unindexed_array = $(this).serializeArray();
+            // console.log(unindexed_array);
+            var data = {};
+
+            $.map(unindexed_array, function(n, i) {
+                data[n['name']] = n['value']
+            })
+
+            // console.log(data);
+
+            var request = {
+                "url":`http://localhost:3000/api/updateLecture/${data.id}`,
+                "method" : "PUT",
+                "data": data
+            }
+
+            $.ajax(request).done(function(response){
+                alert("Course Update Successfully!!!");
+            })
+
+        })
+    });
+</script>
+<!-- End Main Site -->

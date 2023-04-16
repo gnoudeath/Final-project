@@ -66,4 +66,30 @@ exports.newLecture = (req, res) => {
     res.render('admin/courses/newLecture', {id:req.query.id});
 }
 
+
+exports.lectureList = (req, res) => {
+    // console.log(req.query.id);
+    axios.get('http://localhost:3000/api/lecture',{params: {id:req.query.id}})
+        .then(function(response){
+            res.render("admin/courses/lecture", {lectureContent: response.data});
+        })
+        .catch(err =>{
+            res.send(err);
+        })
+}
+
+exports.updateLecture = (req, res) => {
+    // console.log(req.query.id);
+    axios.get('http://localhost:3000/api/lectureList',{params: {id:req.query.id}})
+        .then(function(contentdata) {
+            res.render("admin/courses/updateLecture",{lectureContent:contentdata.data})
+        })
+        .catch(err => {
+            res.send(err);
+        })
+}
+
+
+
+
 // End Lecture

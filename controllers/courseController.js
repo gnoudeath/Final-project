@@ -140,7 +140,7 @@ exports.createCourseContent = (req, res) => {
 exports.findCourseContent = async (req, res) => {
     try {
         const id = req.query.id;
-        let courseContent;    
+        let courseContent;   
         if (id) {
             courseContent = await CourseContent.find({course: id});
             if (!courseContent) {
@@ -160,9 +160,8 @@ exports.findCourseContent = async (req, res) => {
 }
 exports.findContent = async (req,res) =>{
     try {
-        const id = req.query.id;
-        console.log('content', id); // in ra giá trị của id
-        let content;    
+        const id = req.query.id; // in ra giá trị của id
+        let content;
         if (id) {
             content = await CourseContent.findById(id);
             if (!content) {
@@ -188,7 +187,7 @@ exports.updateContent = (req, res)=>{
             .send({ message : "Data to update can not be empty"})
     }
     const id = req.params.id;
-    console.log(req.params.id)
+    // console.log(req.params.id)
     CourseContent.findByIdAndUpdate(id, req.body, { useFindAndModify: false})
         .then(data => {
             if(!data){
@@ -240,7 +239,7 @@ exports.createLecture = (req, res) => {
         noteLecture: req.body.noteLecture,
         CourseContent: new mongoose.Types.ObjectId(req.body.id),
     });
-    console.log(lecture);
+    // console.log(lecture);
 
     // save course content in the database
     lecture.save()
@@ -253,4 +252,91 @@ exports.createLecture = (req, res) => {
                 message: err.message || "Some error occurred while creating a create operation"
             });
         });
+}
+
+exports.findlectureList = async (req, res) => {
+    try {
+        const id = req.query.id;
+        let lectureContent;   
+        // console.log(req.query.id);
+        if (id) {
+            lectureContent = await Lecture.find({CourseContent: id});
+            if (!lectureContent) {
+                return res.status(404).send({ message: `Not found course with id ${id}` });
+            }
+            else{
+                
+                res.send(lectureContent)
+                
+            }
+            
+        }
+        
+    } catch (error) {
+        res.status(500).send({ message: error.message || "Error occurred while retrieving course information" });
+    }
+}
+exports.findlecture = async (req,res) =>{
+    try {
+        const id = req.query.id;
+        // console.log('lecture', id); // in ra giá trị của id
+        let lecture;    
+        if (id) {
+            lecture = await Lecture.findById(id);
+            if (!lecture) {
+                return res.status(404).send({ message: `Not found course with id ${id}` });
+            }
+            else{
+                
+                res.send(lecture)
+                
+            }
+            
+        }
+        
+    } catch (error) {
+        res.status(500).send({ message: error.message || "Error occurred while retrieving course information" });
+    }
+}
+
+
+exports.updateLecture = (req, res)=>{
+    if(!req.body){
+        return res
+            .status(400)
+            .send({ message : "Data to update can not be empty"})
+    }
+    const id = req.params.id;
+    console.log(req.params.id)
+    Lecture.findByIdAndUpdate(id, req.body, { useFindAndModify: false})
+        .then(data => {
+            if(!data){
+                res.status(404).send({ message : `Cannot Update user with ${id}. Maybe user not found!`})
+            }else{
+                res.send(data)
+            }
+        })
+        .catch(err =>{
+            res.status(500).send({ message : "Error Update user information"})
+        })
+}
+
+exports.deleteLecture = (req, res) => {
+    const id = req.params.id;
+    // console.log(req.params.id);
+    Lecture.findByIdAndDelete(id, req.body, { useFindAndModify: false})
+        .then(data => {
+            if (!data) {
+                res.status(404).send({ message: 'Cannot Delete with id ${id}. May be id is wrong' })
+            } else {
+                res.send({
+                    message: "Course was deleted successfuly!"
+                })
+            }
+        })
+        .catch(err => {
+            res.status(500).send({
+                message: "Could not delete Course with id=" + id
+            });
+        })
 }
