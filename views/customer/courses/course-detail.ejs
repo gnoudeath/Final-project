@@ -14,48 +14,58 @@
                     </div>
                     <div class="row-container">
                         <h5 style=" color: black; font-size: 20px;">Nội dung khóa học</h5>
-                    <div class="noidung-cl">
-                        <ul>
-                            <li class=""><strong>11 </strong> chương</li>
-                            <li><strong>138 </strong> bài học</li>
-                            <li><span>Thời lượng <strong>10 giờ 26 phút</strong></span></li>
-                        </ul>
-                        <div class="morongvathunho"><a class="btn" style="color: orangered;" id="morongtatca">Mở rộng tất
-                                cả</a></div>
-                    </div>
-                    </div>
-                    <div class="nav-baihoc" data-target="tonghop-baihoc-1">
-                        <div class="baihoc1">
-                            <h6 class="h6-god">
-                                <span class="icon expand-icon">+</span>
-                                <span>
-                                    1. Giới thiệu
-                                </span>
-                                <span class="span-baihoc">
-                                    3 bài học
-                                </span>
-                            </h6>
+                        <div class="noidung-cl">
+                            <ul>
+                                <li class=""><strong>11 </strong> chương</li>
+                                <li><strong>138 </strong> bài học</li>
+                                <li><span>Thời lượng <strong>10 giờ 26 phút</strong></span></li>
+                            </ul>
+                            <div class="morongvathunho"><a class="btn" style="color: orangered;" id="morongtatca">Mở
+                                    rộng tất
+                                    cả</a></div>
                         </div>
                     </div>
-                    <div class="tonghop-baihoc" id="tonghop-baihoc-1">
-                        <div class="noidung-baihoc">
-                            <div class="baihoc-div1">
-                                <span>
-                                    1. Giới thiệu khóa học
-                                </span>
-                                <span class="time-baihoc">
-                                    01:03
-                                </span>
+                    <% for (let j=0; j < courseContent.length; j++) { %>
+                        <div class="nav-baihoc" data-target="tonghop-baihoc-<%= j %>">
+                            <div class="baihoc<%= j + 1 %>">
+                                <h6 class="h6-god">
+                                    <span class="icon expand-icon">+</span>
+                                    <span>
+                                        <%= j + 1 %>. <%= courseContent[j].nameCourseContent %>
+                                    </span>
+                                    <span class="span-baihoc">
+                                        <%= lectureList[j].length %> bài học
+                                    </span>
+                                </h6>
                             </div>
                         </div>
-                    </div>
+
+                        <div class="tonghop-baihoc" id="tonghop-baihoc-<%= j %>">
+                            <% for (let k=0; k < lectureList[j].length; k++) { %>
+                                <div class="noidung-baihoc">
+                                    <div class="baihoc-div1">
+                                        <span>
+                                            <%= k + 1 %>. <%= lectureList[j][k].nameLecture %>
+                                        </span>
+                                        <span class="time-baihoc">
+                                            <%= lectureList[j][k].duration %>
+                                        </span>
+                                    </div>
+                                </div>
+                                <% } %>
+                        </div>
+                        <% } %>
+
+
                 </div>
             </div>
             <div class="col-3 my-container1">
                 <div class="col-lg-3-right d-flex flex-column align-items-center">
                     <img class="img-fluid rounded mb-4 mb-lg-0" src="<%= courses.imageCourse %>" alt=""
                         style="width: 600px; height: 300px;">
-                    <h5 class="mp-h5"><%= courses.costCourse %></h5>
+                    <h5 class="mp-h5">
+                        <%= courses.costCourse %>
+                    </h5>
                     <button class="dangky-btn">
                         <a href="/course-learning" class="dangky-btn">ĐĂNG KÝ HỌC</a>
                     </button>

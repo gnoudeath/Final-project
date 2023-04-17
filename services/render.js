@@ -36,7 +36,6 @@ exports.newCourseContent = (req, res) => {
 }
 
 exports.contentList = (req, res) => {
-    // console.log(req.query.id);
     axios.get('http://localhost:3000/api/contentList',{params: {id:req.query.id}})
         .then(function(response){
             res.render("admin/courses/contentList", {courseContent: response.data});

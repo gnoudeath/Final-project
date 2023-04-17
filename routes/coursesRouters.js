@@ -20,8 +20,8 @@ router.delete('/api/courses/:id', courseController.deleteCourse);
 
 
 // Course Content
-router.get('/newCourseContent', checkRole('admin'), services.newCourseContent);
 router.get('/contentList', checkRole('admin'), services.contentList);
+router.get('/newCourseContent', checkRole('admin'), services.newCourseContent);
 router.get('/updateContent', checkRole('admin'), services.updateContent);
 
 // API Course Content
@@ -40,7 +40,7 @@ router.get('/updateLecture', checkRole('admin'), services.updateLecture);
 
 // API Lecture
 router.post('/api/newLecture', courseController.createLecture);
-router.get('/api/lecture', courseController.findlectureList);
+router.get('/api/lecture', courseController.findLectureList);
 router.get('/api/lectureList',courseController.findlecture)
 
 router.put('/api/updateLecture/:id', courseController.updateLecture);

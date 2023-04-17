@@ -3,6 +3,7 @@ const CourseContent = require('../models/coursesContent');
 const Lecture = require('../models/lecture');
 const mongoose = require('mongoose');
 
+
 // create and save new course
 exports.createCourse = (req, res) => {
     // validate request
@@ -136,28 +137,24 @@ exports.createCourseContent = (req, res) => {
         });
 }
 
-
 exports.findCourseContent = async (req, res) => {
     try {
-        const id = req.query.id;
-        let courseContent;   
-        if (id) {
-            courseContent = await CourseContent.find({course: id});
+        const contentId = req.query.id;
+        let courseContent;  
+        if (contentId) {
+            courseContent = await CourseContent.find({course: contentId});
             if (!courseContent) {
-                return res.status(404).send({ message: `Not found course with id ${id}` });
+                return res.status(404).send({ message: `Not found course with id ${contentId}` });
+            } else {
+                res.send(courseContent);
             }
-            else{
-                
-                res.send(courseContent)
-                
-            }
-            
         }
-        
     } catch (error) {
         res.status(500).send({ message: error.message || "Error occurred while retrieving course information" });
     }
 }
+
+
 exports.findContent = async (req,res) =>{
     try {
         const id = req.query.id; // in ra giá trị của id
@@ -254,28 +251,23 @@ exports.createLecture = (req, res) => {
         });
 }
 
-exports.findlectureList = async (req, res) => {
+exports.findLectureList = async (req, res) => {
     try {
         const id = req.query.id;
-        let lectureContent;   
-        // console.log(req.query.id);
         if (id) {
-            lectureContent = await Lecture.find({CourseContent: id});
+            const lectureContent = await Lecture.find({ CourseContent: id });
             if (!lectureContent) {
-                return res.status(404).send({ message: `Not found course with id ${id}` });
+                return res.status(404).send({ message: `Not found lecture with CourseContent id ${id}` });
             }
-            else{
-                
-                res.send(lectureContent)
-                
-            }
-            
+            res.send(lectureContent);
+        } else {
+            return res.status(400).send({ message: "Missing CourseContent id parameter" });
         }
-        
     } catch (error) {
-        res.status(500).send({ message: error.message || "Error occurred while retrieving course information" });
+        res.status(500).send({ message: error.message || "Error occurred while retrieving lecture information" });
     }
-}
+};
+
 exports.findlecture = async (req,res) =>{
     try {
         const id = req.query.id;
