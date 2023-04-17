@@ -1,6 +1,17 @@
+
 <!-- Main Site -->
 <main id="site-main">
     <div class="container">
+        <div class="form-title text-center">
+            <h2 class="text-dark">Lecture List</h2>
+        </div>
+        <div class="box-nav d-flex justify-between">
+            <a href="newLecture?id=<%=id%>" class="boder-shadow">
+                <span class="text-gradient">
+                    New Lecture <i class="fa-solid fa-book-open"></i>
+                </span>
+            </a>
+        </div>
         <!-- form handling -->
         <form action="/" method="POST">
             <table class="table">
@@ -33,9 +44,6 @@
                                 <%= lectureContent[i].noteLecture %>
                             </td>
                             <td>
-                                <a href="newLecture?id=<%= lectureContent[i].CourseContent%>" class="btn border-shadow update">
-                                    <span class="text-gradient"><i class="fa-brands fa-discourse"></i></span>
-                                </a>
                                 <a href="updateLecture?id=<%= lectureContent[i]._id%>" class="btn border-shadow update">
                                     <span class="text-gradient"><i class="fas fa-pencil-alt"></i></span>
                                 </a>

@@ -1,6 +1,16 @@
 <!-- Main Site -->
 <main id="site-main">
     <div class="container">
+        <div class="form-title text-center">
+            <h2 class="text-dark">Content List</h2>
+        </div>
+        <div class="box-nav d-flex justify-between">
+            <a href="newCourseContent?id=<%= id%>" class="boder-shadow">
+                <span class="text-gradient">
+                    New Content <i class="fa-solid fa-book-open"></i>
+                </span>
+            </a>
+        </div>
         <!-- form handling -->
         <form action="/" method="POST">
             <table class="table">
@@ -9,6 +19,7 @@
                         <th>ID</th>
                         <th class="td-max-d">List Content</th>
                         <th>Action</th>
+                        <th>List Lecture</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -21,15 +32,14 @@
                                 <%= courseContent[i].nameCourseContent %>
                             </td>
                             <td>
-                                <a href="newCourseContent?id=<%= courseContent[i].course%>" class="btn border-shadow update">
-                                    <span class="text-gradient"><i class="fa-brands fa-discourse"></i></span>
-                                </a>
                                 <a href="updateContent?id=<%= courseContent[i]._id%>" class="btn border-shadow update">
                                     <span class="text-gradient"><i class="fas fa-pencil-alt"></i></span>
                                 </a>
                                 <a class="btn border-shadow delete" data-id=<%=courseContent[i]._id %>>
                                     <span class="text-gradient"><i class="fa-solid fa-trash"></i></span>
                                 </a>
+                            </td>
+                            <td>
                                 <a href="lecture?id=<%= courseContent[i]._id%>" class="btn border-shadow update">
                                     <span class="text-gradient"><i class="fa-brands fa-discourse"></i></span>
                                 </a>
@@ -38,7 +48,6 @@
                     <% } %>
                 </tbody>                          
             </table>
-
         </form>
     </div>
 </main>

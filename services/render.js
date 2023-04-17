@@ -38,7 +38,7 @@ exports.newCourseContent = (req, res) => {
 exports.contentList = (req, res) => {
     axios.get('http://localhost:3000/api/contentList',{params: {id:req.query.id}})
         .then(function(response){
-            res.render("admin/courses/contentList", {courseContent: response.data});
+            res.render("admin/courses/contentList", {courseContent: response.data , id: req.query.id});
         })
         .catch(err =>{
             res.send(err);
@@ -70,7 +70,7 @@ exports.lectureList = (req, res) => {
     // console.log(req.query.id);
     axios.get('http://localhost:3000/api/lecture',{params: {id:req.query.id}})
         .then(function(response){
-            res.render("admin/courses/lecture", {lectureContent: response.data});
+            res.render("admin/courses/lecture", {lectureContent: response.data, id: req.query.id});
         })
         .catch(err =>{
             res.send(err);

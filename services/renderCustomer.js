@@ -61,14 +61,14 @@ exports.getCourseDetailAndContentList = (req, res) => {
             
             // Lấy thông tin đầy đủ về các courseContent
             const contentIds = contentData.map(content => content._id);
-            console.log(contentIds);
+            // console.log(contentIds);
             const lecturePromiseArray = contentIds.map(contentId => axios.get(`http://localhost:3000/api/lecture?id=${contentId}`));
             const lectureResponseArray = await Promise.all(lecturePromiseArray);
             const lectureDataArray = lectureResponseArray.map(response => response.data);
             
-            console.log(courseData); // log dữ liệu courseData
-            console.log(contentData); // log dữ liệu contentData
-            console.log(lectureDataArray); // log dữ liệu của các lectureData
+            // console.log(courseData); 
+            // console.log(contentData); 
+            // console.log(lectureDataArray); 
             
             res.render('customer/courses/course-detail', { courses: courseData, courseContent: contentData, lectureList: lectureDataArray });
         })

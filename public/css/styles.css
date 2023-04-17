@@ -11233,10 +11233,7 @@ h6,
 }
 
 .nav-baihoc,
-.baihoc1,
-.baihoc2,
-.baihoc3,
-.baihoc4 {
+[class^="baihoc"] {
   padding: 10px;
   border-radius: 10px;
   margin-bottom: -5px;
@@ -11252,12 +11249,10 @@ h6,
   float: right;
 }
 
-.baihoc1,
-.baihoc2,
-.baihoc3,
-.baihoc4 {
+[class^="baihoc"] {
   background-color: #f5f5f5;
 }
+
 
 .time-baihoc {
   float: right;
@@ -11343,9 +11338,6 @@ h6,
   margin-top: 40px;
 }
 
-.baihoc1 {
-  width: 400px;
-}
 
 .baihoc-div1,
 .baihoc-div2,
@@ -11585,7 +11577,6 @@ tr {
 .my-container1 {
   flex-basis: 30%;
   margin-left: auto;
-  align-self: center;
   margin: 0 auto;
 }
 

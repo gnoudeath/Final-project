@@ -1,5 +1,8 @@
 <!-- Main Site -->
 <main id="site-main">
+    <div class="form-title text-center">
+        <h2 class="text-dark">Course List</h2>
+    </div>
     <div class="container">
         <div class="box-nav d-flex justify-between">
             <a href="newCourse" class="boder-shadow">
@@ -22,6 +25,7 @@
                         <th>Create time</th>
                         <th>Update time</th>
                         <th>Action</th>
+                        <th>List Content</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -57,14 +61,16 @@
                                         <% } %>
                             </td>
                             <td>    
-                                <a href="contentList?id=<%= courses[i]._id%>" class="btn border-shadow update">
-                                    <span class="text-gradient"><i class="fa-brands fa-discourse"></i></span>
-                                </a>
                                 <a href="update-course?id=<%= courses[i]._id%>" class="btn border-shadow update">
                                     <span class="text-gradient"><i class="fas fa-pencil-alt"></i></span>
                                 </a>
                                 <a class="btn border-shadow delete" data-id=<%=courses[i]._id %>>
                                     <span class="text-gradient"><i class="fa-solid fa-trash"></i></span>
+                                </a>
+                            </td>
+                            <td>
+                                <a href="contentList?id=<%= courses[i]._id%>" class="btn border-shadow update">
+                                    <span class="text-gradient"><i class="fa-brands fa-discourse"></i></span>
                                 </a>
                             </td>
                         </tr>
