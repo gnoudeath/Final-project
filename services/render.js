@@ -67,7 +67,7 @@ exports.newLecture = (req, res) => {
 
 
 exports.lectureList = (req, res) => {
-    // console.log(req.query.id);
+    
     axios.get('http://localhost:3000/api/lecture',{params: {id:req.query.id}})
         .then(function(response){
             res.render("admin/courses/lecture", {lectureContent: response.data, id: req.query.id});
@@ -75,6 +75,7 @@ exports.lectureList = (req, res) => {
         .catch(err =>{
             res.send(err);
         })
+        
 }
 
 exports.updateLecture = (req, res) => {
