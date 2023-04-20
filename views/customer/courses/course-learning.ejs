@@ -63,7 +63,7 @@
         <div class="row-2">
             <div class="col-9 my-container2">
                 <div class="col-lg-7-11">
-                    <iframe width="1100" height="500" src="//www.youtube.com/embed/W0vEUmyvthQ"
+                    <iframe width="1100" height="500" src="//www.youtube.com/embed/<%= lectures.VideoId %>"
                         title="YouTube video player" frameborder="0"
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                         allowfullscreen></iframe>
@@ -71,7 +71,7 @@
                 <div class="noidung-course col-lg-11">
                     <header class="wrapper">
                         <h2>
-                            
+                            <%= lectures.nameLecture %>
                         </h2>
                         <p>
                             Cập nhật tháng 11 năm 2022
@@ -85,40 +85,10 @@
                     <hr>
                     <div class="content-course">
                         <h3>
-                            Cách Internal (sử dụng nội bộ)
+                            <%= lectures.contentLecture %>
                         </h3>
                         <span>
-                            Đặt trực tiếp cặp thẻ script vào mã HTML và viết javascript giữa cặp thẻ này.
-                        </span>
-                    </div>
-                    <br>
-                    <hr>
-                    <div class="content-course">
-                        <h3>
-                            Cách Internal (sử dụng nội bộ)
-                        </h3>
-                        <span>
-                            Đặt trực tiếp cặp thẻ script vào mã HTML và viết javascript giữa cặp thẻ này.
-                        </span>
-                    </div>
-                    <br>
-                    <hr>
-                    <div class="content-course">
-                        <h3>
-                            Cách Internal (sử dụng nội bộ)
-                        </h3>
-                        <span>
-                            Đặt trực tiếp cặp thẻ script vào mã HTML và viết javascript giữa cặp thẻ này.
-                        </span>
-                    </div>
-                    <br>
-                    <hr>
-                    <div class="content-course">
-                        <h3>
-                            Cách Internal (sử dụng nội bộ)
-                        </h3>
-                        <span>
-                            Đặt trực tiếp cặp thẻ script vào mã HTML và viết javascript giữa cặp thẻ này.
+                            <%= lectures.noteLecture %>
                         </span>
                     </div>
                     <br>
@@ -145,7 +115,7 @@
                                     <% totalLectures +=lectureList[j].length; %>
                                         <div class="tonghop-baihoc-1" id="tonghop-baihoc-<%= j %>">
                                             <% for (let k=0; k < lectureList[j].length; k++) { %>
-                                                <a href="/course-learning?id=<%= courses._id %>&chill=<%= lectureList[j][k]._id %>">
+                                                <a href="/course-learning/<%= courses.slug %>?id=<%= lectureList[j][k]._id %>">
                                                     <div class="noidung-baihoc">                                                   
                                                         <div class="baihocc-div1">
                                                             <span>
@@ -156,7 +126,7 @@
                                                                 <%= lectureList[j][k].duration %>
                                                             </span>
                                                         </div>
-                                                        <h2><%= lectureList.contentLecture %>2</h2>  
+                                                        <h2><%= lectureList.contentLecture %></h2>  
                                                 </div>    
                                                 </a>                                               
                                                 <% } %>

@@ -36,6 +36,8 @@
                                                 <% for (let k=0; k < lectureList[j].length; k++) { %>
                                                     <div class="noidung-baihoc">
                                                         
+                                                            <a href="/course-learning/<%= courses.slug %>?id=<%= lectureList[j][k]._id %>" class="dangky-btn">
+
                                                             <div class="baihoc-div1">
                                                                 <span>
                                                                     <%= (totalLectures - lectureList[j].length + k + 1) %>. <%=
@@ -45,7 +47,7 @@
                                                                     <%= lectureList[j][k].duration %>
                                                                 </span>
                                                             </div>
-                                                        
+                                                        </a>
                                                         
                                                     </div>
                                                     <% } %>
@@ -79,7 +81,7 @@
                         <%= courses.costCourse %>
                     </h5>
                     <button class="dangky-btn">
-                        <a href="/course-learning?id=<%= courses._id%>" class="dangky-btn">ĐĂNG KÝ HỌC</a>
+                        <a href="/course-learning?id=<%= lectureList._id%>" class="dangky-btn">ĐĂNG KÝ HỌC</a>
                     </button>
                     <ul class="ul-dangky">
                         <li>

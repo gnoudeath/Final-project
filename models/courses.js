@@ -25,6 +25,11 @@ const courseSchema = new Schema({
         type: String,
         require: true,
     },
+    slug: {
+        type: String,
+        require: true,
+        unique: true,
+    }
 },{ timestamps: true });
 
 const Course = mongoose.model('Course', courseSchema);

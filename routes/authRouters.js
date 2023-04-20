@@ -3,6 +3,7 @@ const authController = require('../controllers/authController');
 const { checkRole } = require('../middleware/authMiddleware')
 const courseController = require('../controllers/courseController');
 const services = require('../services/renderCustomer');
+const url = require('url');
 const router = Router();
 
 router.get('/signup', authController.signup_get);
@@ -45,8 +46,10 @@ router.get('/single', checkRole('customer'), (req, res) => {
 // });
 router.get('/course', checkRole('customer'), services.courseList);
 
-router.get('/course-detail', checkRole('customer'), services.getCourseDetailAndContentList);
-router.get('/course-learning', checkRole('customer'), services.getDetailAndContentList);
+router.get('/course-detail/:slug', checkRole('customer'), services.getCourseDetailAndContentList);
+
+router.get('/course-learning/:slug', checkRole('customer'), services.getDetailAndContentList);
+
 
 // router.get('/lecture', checkRole('admin'), services.lectureList);
 
