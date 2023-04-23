@@ -3,7 +3,7 @@ const tongHopBaiHocs = document.querySelectorAll('.tonghop-baihoc-1');
 const expandIcons = document.querySelectorAll('.expand-icon');
 const morongTatCaButton = document.querySelector('.morongvathunho-1 a');
 
-morongTatCaButton.addEventListener('click', function() {
+morongTatCaButton.addEventListener('click', function () {
     for (let i = 0; i < tongHopBaiHocs.length; i++) {
         tongHopBaiHocs[i].classList.add('active');
         expandIcons[i].innerHTML = '-';
@@ -12,7 +12,7 @@ morongTatCaButton.addEventListener('click', function() {
 });
 
 for (let i = 0; i < navBaiHocs.length; i++) {
-    navBaiHocs[i].addEventListener('click', function() {
+    navBaiHocs[i].addEventListener('click', function () {
         tongHopBaiHocs[i].classList.toggle('active');
         if (tongHopBaiHocs[i].classList.contains('active')) {
             expandIcons[i].innerHTML = '-';
@@ -30,7 +30,7 @@ linkThuNhoTatCa.innerHTML = 'Thu nhỏ tất cả';
 thuNhoTatCaButton.appendChild(linkThuNhoTatCa);
 thuNhoTatCaButton.style.display = 'none';
 
-thuNhoTatCaButton.addEventListener('click', function() {
+thuNhoTatCaButton.addEventListener('click', function () {
     for (let i = 0; i < tongHopBaiHocs.length; i++) {
         tongHopBaiHocs[i].classList.remove('active');
         expandIcons[i].innerHTML = '+';
@@ -40,7 +40,7 @@ thuNhoTatCaButton.addEventListener('click', function() {
     thuNhoTatCaButton.style.display = 'none';
 });
 
-morongTatCaButton.addEventListener('click', function() {
+morongTatCaButton.addEventListener('click', function () {
     for (let i = 0; i < tongHopBaiHocs.length; i++) {
         tongHopBaiHocs[i].classList.add('active');
         expandIcons[i].innerHTML = '-';
@@ -50,5 +50,9 @@ morongTatCaButton.addEventListener('click', function() {
     morongTatCaButton.style.display = 'none';
 });
 
-document.querySelector('.morongvathunho').appendChild(thuNhoTatCaButton);
+document.querySelector('.morongvathunho-1').appendChild(thuNhoTatCaButton);
+
+
+
+
 

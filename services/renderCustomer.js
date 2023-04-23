@@ -1,5 +1,7 @@
 const axios = require('axios');
 const Course = require('../models/courses');
+const { getTotalViewedCount } = require('../models/userLecture');
+
 
 exports.courseList = (req, res) => {
     axios.get('http://localhost:3000/api/courses')
@@ -12,7 +14,16 @@ exports.courseList = (req, res) => {
         })
 }
 
-
+exports.courseHome = (req, res) => {
+    axios.get('http://localhost:3000/api/courses')
+        .then(function (response) {
+            // console.log(response)
+            res.render('home', { courses: response.data });
+        })
+        .catch(err => {
+            res.send(err);
+        })
+}
 // exports.getCourseDetailAndContentList = (req, res) => {
 //     const courseId = req.query.id; // Lấy id của course truy vấn từ req
 //     const coursePromise = axios.get(`http://localhost:3000/api/courses?id=${courseId}`); //Tạo ra một promise để thực hiện yêu cầu get đến API với tham số id là courseId
@@ -67,41 +78,88 @@ exports.getCourseDetailAndContentList = (req, res) => {
 
 
 
-exports.getDetailAndContentList = (req, res) => {
+// exports.getDetailAndContentList = (req, res) => {
+//     const courseSlug = req.params.slug;
+//     const lectureId = req.query.id;
+
+//     Course.findOne({ slug: courseSlug })
+//         .then(async function (courseData) {
+//             const contentPromise = axios.get(`http://localhost:3000/api/contentList?id=${courseData._id}`);
+//             const contentData = (await contentPromise).data;
+//             const lectureDataArray = [];
+
+//             for (const content of contentData) {
+//                 const lecturePromiseArray = axios.get(`http://localhost:3000/api/lecture?id=${content._id}`);
+//                 const lectureData = (await lecturePromiseArray).data;
+
+//                 // convert ObjectId to string
+//                 const stringifiedLectureData = lectureData.map(lecture => ({
+//                     ...lecture,
+//                     _id: lecture._id.toString()
+//                 }));
+
+//                 lectureDataArray.push(stringifiedLectureData);
+//             }
+
+//             const flattenedLectureDataArray = lectureDataArray.flat();
+
+//             const lectures = flattenedLectureDataArray.find(lecture => lecture._id === lectureId);    
+
+//             console.log(lectures)
+
+//             res.render('customer/courses/course-learning', { courses: courseData,courseContent: contentData, lectureList: lectureDataArray, lectures, layout: false });
+//         })
+//         .catch(err => {
+//             res.send(err);
+//         });
+// }
+
+exports.getDetailAndContentList = async (req, res) => {
     const courseSlug = req.params.slug;
     const lectureId = req.query.id;
+    const userId = res.locals.user._id;
+    
+    try {
+        const courseData = await Course.findOne({ slug: courseSlug });
+        const contentPromise = axios.get(`http://localhost:3000/api/contentList?id=${courseData._id}`);
+        const contentData = (await contentPromise).data;
+        const lectureDataArray = [];
 
-    Course.findOne({ slug: courseSlug })
-        .then(async function (courseData) {
-            const contentPromise = axios.get(`http://localhost:3000/api/contentList?id=${courseData._id}`);
-            const contentData = (await contentPromise).data;
-            const lectureDataArray = [];
+        for (const content of contentData) {
+            const lecturePromiseArray = axios.get(`http://localhost:3000/api/lecture?id=${content._id}`);
+            const lectureData = (await lecturePromiseArray).data;
 
-            for (const content of contentData) {
-                const lecturePromiseArray = axios.get(`http://localhost:3000/api/lecture?id=${content._id}`);
-                const lectureData = (await lecturePromiseArray).data;
+            // convert ObjectId to string
+            const stringifiedLectureData = lectureData.map(lecture => ({
+                ...lecture,
+                _id: lecture._id.toString()
+            }));
 
-                // convert ObjectId to string
-                const stringifiedLectureData = lectureData.map(lecture => ({
-                    ...lecture,
-                    _id: lecture._id.toString()
-                }));
+            lectureDataArray.push(stringifiedLectureData);
+        }
 
-                lectureDataArray.push(stringifiedLectureData);
-            }
+        const flattenedLectureDataArray = lectureDataArray.flat();
 
-            const flattenedLectureDataArray = lectureDataArray.flat();
+        const lectures = flattenedLectureDataArray.find(lecture => lecture._id === lectureId); 
 
-            const lectures = flattenedLectureDataArray.find(lecture => lecture._id === lectureId);    
-            
-            // console.log(lectures)
+        // Check lecture completion
+        const isCompleted = req.isCompleted;
 
-            res.render('customer/courses/course-learning', { courses: courseData,courseContent: contentData, lectureList: lectureDataArray, lectures, layout: false });
-        })
-        .catch(err => {
-            res.send(err);
-        });
+        // Get the total viewed count for the lecture
+        const viewedCount = await getTotalViewedCount(userId, courseSlug);
+        console.log(viewedCount)
+        lectures.isCompleted = isCompleted;
+        lectures.viewedCount = viewedCount;
+
+        res.render('customer/courses/course-learning', { courses: courseData, courseContent: contentData, lectureList: lectureDataArray, lectures, layout: false });
+    } catch (err) {
+        res.send(err);
+    }
 }
+
+
+
+
 
 
 

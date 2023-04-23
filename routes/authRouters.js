@@ -1,6 +1,6 @@
 const { Router } = require('express');
 const authController = require('../controllers/authController');
-const { checkRole } = require('../middleware/authMiddleware')
+const { checkRole, checkLectureCompletion, getViewedCount } = require('../middleware/authMiddleware')
 const courseController = require('../controllers/courseController');
 const services = require('../services/renderCustomer');
 const url = require('url');
@@ -46,9 +46,12 @@ router.get('/single', checkRole('customer'), (req, res) => {
 // });
 router.get('/course', checkRole('customer'), services.courseList);
 
+router.get('/home', checkRole('customer'), services.courseHome);
+
 router.get('/course-detail/:slug', checkRole('customer'), services.getCourseDetailAndContentList);
 
-router.get('/course-learning/:slug', checkRole('customer'), services.getDetailAndContentList);
+// router.get('/course-learning/:slug', checkRole('customer'), services.getDetailAndContentList);
+router.get('/course-learning/:slug', checkRole('customer'), checkLectureCompletion, services.getDetailAndContentList);
 
 
 // router.get('/lecture', checkRole('admin'), services.lectureList);

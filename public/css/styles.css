@@ -11334,7 +11334,7 @@ h6,
 
 .noidung-course {
   margin-left: 40px;
-  margin-top: 40px;
+  padding: 50px;
 }
 
 
@@ -11612,12 +11612,14 @@ tr {
 }
 .my-container3 {
   margin-bottom: 290px;
+  margin-right: auto;
+  border: 1px solid ;
+  max-width: 500px;
 }
 
 .row-2 {
   display: flex;
-  width: 100%;
-  
+  width: 95%;
 }
 
 .container2{
@@ -11642,13 +11644,34 @@ tr {
   width: 280px;
   margin-left: 15px;
   background-color: #d95700;
+  color: white;
 }
 
+.class-note {
+  border-left: 5px solid;
+  padding-left: 17px;
+  border-color: #d95700;
+  color: #757575;
+  margin-top: 30px;
+  font-size: 16px;
+  max-width: 1020px;
+}
 
+.content-course {
+  font-size: 17px;
+}
 
+.video-view {
+  background-color: #000;
+  padding: 0 8.5%;
+  width: 100%;
+}
 
+.header-nav {
+  position: fixed;
+  top: 0;
+}
 
-
-
-
-
+.container-fluid-1 {
+  margin-top: 66px;
+}

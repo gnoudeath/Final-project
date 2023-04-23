@@ -1,6 +1,8 @@
 const Course = require('../models/courses');
 const CourseContent = require('../models/coursesContent');
 const Lecture = require('../models/lecture');
+const UserLecture = require('../models/userLecture');
+const checkUser = require('../middleware/authMiddleware');
 const mongoose = require('mongoose');
 
 
@@ -140,9 +142,9 @@ exports.createCourseContent = (req, res) => {
 exports.findCourseContent = async (req, res) => {
     try {
         const contentId = req.query.id;
-        let courseContent;  
+        let courseContent;
         if (contentId) {
-            courseContent = await CourseContent.find({course: contentId});
+            courseContent = await CourseContent.find({ course: contentId });
             if (!courseContent) {
                 return res.status(404).send({ message: `Not found course with id ${contentId}` });
             } else {
@@ -155,7 +157,7 @@ exports.findCourseContent = async (req, res) => {
 }
 
 
-exports.findContent = async (req,res) =>{
+exports.findContent = async (req, res) => {
     try {
         const id = req.query.id; // in ra giá trị của id
         let content;
@@ -164,44 +166,44 @@ exports.findContent = async (req,res) =>{
             if (!content) {
                 return res.status(404).send({ message: `Not found course with id ${id}` });
             }
-            else{
-                
+            else {
+
                 res.send(content)
-                
+
             }
-            
+
         }
-        
+
     } catch (error) {
         res.status(500).send({ message: error.message || "Error occurred while retrieving course information" });
     }
 }
 
-exports.updateContent = (req, res)=>{
-    if(!req.body){
+exports.updateContent = (req, res) => {
+    if (!req.body) {
         return res
             .status(400)
-            .send({ message : "Data to update can not be empty"})
+            .send({ message: "Data to update can not be empty" })
     }
     const id = req.params.id;
     // console.log(req.params.id)
-    CourseContent.findByIdAndUpdate(id, req.body, { useFindAndModify: false})
+    CourseContent.findByIdAndUpdate(id, req.body, { useFindAndModify: false })
         .then(data => {
-            if(!data){
-                res.status(404).send({ message : `Cannot Update user with ${id}. Maybe user not found!`})
-            }else{
+            if (!data) {
+                res.status(404).send({ message: `Cannot Update user with ${id}. Maybe user not found!` })
+            } else {
                 res.send(data)
             }
         })
-        .catch(err =>{
-            res.status(500).send({ message : "Error Update user information"})
+        .catch(err => {
+            res.status(500).send({ message: "Error Update user information" })
         })
 }
 
 exports.deleteContent = (req, res) => {
     const id = req.params.id;
     // console.log(req.params.id);
-    CourseContent.findByIdAndDelete(id, req.body, { useFindAndModify: false})
+    CourseContent.findByIdAndDelete(id, req.body, { useFindAndModify: false })
         .then(data => {
             if (!data) {
                 res.status(404).send({ message: 'Cannot Delete with id ${id}. May be id is wrong' })
@@ -268,55 +270,54 @@ exports.findLectureList = async (req, res) => {
     }
 };
 
-exports.findlecture = async (req,res) =>{
+exports.findlecture = async (req, res) => {
     try {
         const id = req.query.id;
         // console.log('lecture', id); // in ra giá trị của id
-        let lecture;    
+        let lecture;
         if (id) {
             lecture = await Lecture.findById(id);
             if (!lecture) {
                 return res.status(404).send({ message: `Not found course with id ${id}` });
             }
-            else{
-                
+            else {
+
                 res.send(lecture)
-                
+
             }
-            
+
         }
-        
+
     } catch (error) {
         res.status(500).send({ message: error.message || "Error occurred while retrieving course information" });
     }
 }
 
-
-exports.updateLecture = (req, res)=>{
-    if(!req.body){
+exports.updateLecture = (req, res) => {
+    if (!req.body) {
         return res
             .status(400)
-            .send({ message : "Data to update can not be empty"})
+            .send({ message: "Data to update can not be empty" })
     }
     const id = req.params.id;
     console.log(req.params.id)
-    Lecture.findByIdAndUpdate(id, req.body, { useFindAndModify: false})
+    Lecture.findByIdAndUpdate(id, req.body, { useFindAndModify: false })
         .then(data => {
-            if(!data){
-                res.status(404).send({ message : `Cannot Update user with ${id}. Maybe user not found!`})
-            }else{
+            if (!data) {
+                res.status(404).send({ message: `Cannot Update user with ${id}. Maybe user not found!` })
+            } else {
                 res.send(data)
             }
         })
-        .catch(err =>{
-            res.status(500).send({ message : "Error Update user information"})
+        .catch(err => {
+            res.status(500).send({ message: "Error Update user information" })
         })
 }
 
 exports.deleteLecture = (req, res) => {
     const id = req.params.id;
     // console.log(req.params.id);
-    Lecture.findByIdAndDelete(id, req.body, { useFindAndModify: false})
+    Lecture.findByIdAndDelete(id, req.body, { useFindAndModify: false })
         .then(data => {
             if (!data) {
                 res.status(404).send({ message: 'Cannot Delete with id ${id}. May be id is wrong' })
@@ -332,3 +333,15 @@ exports.deleteLecture = (req, res) => {
             });
         })
 }
+
+
+// exports.getCountLecture = async (req, res) => {
+//     try {
+//         const userId = res.locals.user._id; // lấy id của user từ biến locals
+//         const count = await UserLecture.countDocuments({ user: userId }); // đếm số lượng bài học đã xem
+//         res.status(200).json({ count });
+//     } catch (err) {
+//         console.error(err);
+//         res.status(500).json({ message: 'Internal server error' });
+//     }
+// }

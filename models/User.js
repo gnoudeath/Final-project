@@ -32,7 +32,20 @@ const userSchema = new mongoose.Schema({
     role: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'role',
-    }
+    },
+    viewedLectures: [
+        {
+            lecture: {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'lecture',
+                required: true,
+            },
+            viewedCount: {
+                type: Number,
+                default: 0,
+            },
+        },
+    ],
 });
 
 // fire a function before doc saved to database

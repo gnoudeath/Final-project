@@ -31,74 +31,55 @@
 
 
 </head>
-<body class="container2" >
-    <nav class="navbar navbar-expand-lg navbar navbar-dark bg-dark nav-course1"
-        style="background-color: rgb(41, 48, 59);">
-        <a class="navbar-brand" href="/"><img src="img/previous.png" alt=""
-                style="width: 20px; height: 20px; margin-right: 30px;"><img src="img/CourseHub.png" alt=""
-                style="width: 40px; height: 40px;margin-right: 10px;"> Lập trình JavaScript Cơ Bản</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
-            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav" style="margin-left: auto; color: white;">
-                <li class="nav-item active">
 
-                    <a class="nav-link" href="#">106/206 bài học</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#"><img src="img/notes.png" alt="" style="width: 20px; height: 20px;"> Ghi
-                        chú</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#"><img src="img/question.png" alt="" style="width: 20px; height: 20px;">
-                        Hướng dẫn</a>
-                </li>
-            </ul>
-        </div>
-    </nav>
+<body class="container2">
     <!-- About Start -->
     <div class="container-fluid-1">
         <div class="row-2">
-            <div class="col-9 my-container2">
-                <div class="col-lg-7-11">
-                    <iframe width="1100" height="500" src="//www.youtube.com/embed/<%= lectures.VideoId %>"
-                        title="YouTube video player" frameborder="0"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                        allowfullscreen></iframe>
-                </div>
-                <div class="noidung-course col-lg-11">
-                    <header class="wrapper">
-                        <h2>
-                            <%= lectures.nameLecture %>
-                        </h2>
-                        <p>
-                            Cập nhật tháng 11 năm 2022
-                        </p>
-                        <span>
-                            Tham gia nhóm Học lập trình tại F8 trên Facebook để cùng nhau trao đổi trong quá
-                            trình học tập ❤️
-                        </span>
-                        <br>
-                    </header>
-                    <hr>
-                    <div class="content-course">
-                        <h3>
-                            <%= lectures.contentLecture %>
-                        </h3>
-                        <span>
-                            <%= lectures.noteLecture %>
-                        </span>
+                <div class="col-13 my-container2">
+                    <div class="col-lg-7-11">
+                        <div class="video-view">
+                            <iframe width="900" height="500" src="//www.youtube.com/embed/<%= lectures.VideoId %>"
+                                title="YouTube video player" frameborder="0"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                allowfullscreen></iframe>
+                        </div>
                     </div>
-                    <br>
-                    <hr>
+                    <div class="noidung-course col-lg-24">
+                        <header class="wrapper">
+                            <h2>
+                                <%= lectures.nameLecture %>
+                            </h2>
+                            <p>
+                                Cập nhật tháng 11 năm 2022
+                            </p>
+                            <span>
+                                Tham gia nhóm Học lập trình tại CourseHub trên Facebook để cùng nhau trao đổi trong quá
+                                trình học tập ❤️
+                            </span>
+                            <br>
+                        </header>
+                        <hr>
+                        <div class="content-course">
+                            <span>
+                                <%= lectures.contentLecture %>
+                            </span>
+                            <div class="class-note">
+                                <span>
+                                    <%= lectures.noteLecture %>
+                                </span>
+                            </div>
+                        </div>
+                        <br>
+                    </div>
                 </div>
-            </div>
-                <div class="col-3 my-container3">
-                    <div class="tong-all-1">
-                        <h5 style="color: black; font-size: 20px;" >Nội dung khóa học</h5>
-                        <% let totalChapters=0; %>
+
+            <div class="col-3 my-container3">
+                <header>
+                    <h5 style="color: black; font-size: 20px;">Nội dung khóa học</h5>
+                </header>
+                <div class="tong-all-1">
+                    <% let totalChapters=0; %>
                         <% let totalLectures=0; %>
                             <% for (let j=0; j < courseContent.length; j++) { %>
                                 <% totalChapters++; %>
@@ -115,76 +96,85 @@
                                     <% totalLectures +=lectureList[j].length; %>
                                         <div class="tonghop-baihoc-1" id="tonghop-baihoc-<%= j %>">
                                             <% for (let k=0; k < lectureList[j].length; k++) { %>
-                                                <a href="/course-learning/<%= courses.slug %>?id=<%= lectureList[j][k]._id %>">
-                                                    <div class="noidung-baihoc">                                                   
+                                                    <a href="/course-learning/<%= courses.slug %>?id=<%= lectureList[j][k]._id %>">
+                                                    <div class="noidung-baihoc">
                                                         <div class="baihocc-div1">
                                                             <span>
-                                                                <%= (totalLectures - lectureList[j].length + k + 1) %>. <%=
-                                                                        lectureList[j][k].nameLecture %>
+                                                                <%= (totalLectures - lectureList[j].length + k + 1) %>.
+                                                                    <%= lectureList[j][k].nameLecture %>
                                                             </span>
                                                             <span class="time-baihoc">
                                                                 <%= lectureList[j][k].duration %>
                                                             </span>
                                                         </div>
-                                                        <h2><%= lectureList.contentLecture %></h2>  
-                                                </div>    
-                                                </a>                                               
+                                                        <h2>
+                                                            <%= lectureList.contentLecture %>
+                                                        </h2>
+                                                    </div>
+                                                </a>
                                                 <% } %>
                                         </div>
                                         <% } %>
-                    </div>
-                    <div class="row-container" style="display: none;">
-                        <h5 style="color: black; font-size: 20px;">Nội dung khóa học</h5>
-                        <div class="noidung-cl" >
-                            <ul>
-                                <li><strong>
-                                        <%= totalChapters %>
-                                    </strong> chương</li>
-                                <li><strong>
-                                        <%= totalLectures %>
-                                    </strong> bài học</li>
-                                <li><span>Thời lượng <strong>10 giờ 26 phút</strong></span></li>
-                            </ul>
-                            <div class="morongvathunho-1"><a class="btn" style="color: orangered;"
-                                    id="morongtatca">Mở rộng tất cả</a></div>
-                        </div>
+                </div>
+                <div class="row-container" style="display: none;">
+                    <h5 style="color: black; font-size: 20px;">Nội dung khóa học</h5>
+                    <div class="noidung-cl">
+                        <ul>
+                            <li><strong>
+                                    <%= totalChapters %>
+                                </strong> chương</li>
+                            <li><strong>
+                                    <%= totalLectures %>
+                                </strong> bài học</li>
+                            <li><span>Thời lượng <strong>10 giờ 26 phút</strong></span></li>
+                        </ul>
+                        <div class="morongvathunho-1"><a class="btn" style="color: orangered;" id="morongtatca">Mở rộng
+                                tất cả</a></div>
                     </div>
                 </div>
+            </div>
         </div>
-    </div>
+    </div>      
+    <div class="header-nav">
+        <nav class="navbar navbar-expand-lg navbar navbar-dark bg-dark nav-course1"
+        style="background-color: rgb(41, 48, 59);">
+        <a class="navbar-brand" href="/">
+            <img src="img/CourseHub.png" alt="" style="width: 40px; height: 40px;margin-right: 10px;">
+            <%= courses.nameCourse %>
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav" style="margin-left: auto; color: white;">
+                <li class="nav-item active">                 
+              
+                    <a class="nav-link" href="#">
+                        <%= lectures.length ? lectures[0].totalViewedCount : 0 %>/<%= totalLectures %> bài học
+                      </a>
+                      
 
-    <nav class="navbar navbar-expand-lg navbar navbar-dark bg-dark"
-    style="display: flex; justify-content: center;">
-        <div class="navhear">
-            <ul class="pagination">
-                <li class="nav-item nav-link active">
-                    <a class="page-link" href="#" aria-label="Previous" style="color: black;">
-                        <span aria-hidden="true">&laquo;</span>
-                        <span>Previous</span>
-                    </a>
+                </li>               
+                <li class="nav-item">
+                    <a class="nav-link" href="#"><i class="fas fa-sticky-note" style="width: 20px; height: 20px;"></i>
+                        Ghi chú</a>
                 </li>
-                <li class="nav-item nav-link active">
-                    <a class="page-link" href="#" aria-label="Next" style="color: black;">
-                        <span>Next</span>
-                        <span aria-hidden="true">&raquo;</span>
-                    </a>
+                <li class="nav-item">
+                    <a class="nav-link" href="#"><i class="far fa-question-circle"
+                            style="width: 20px; height: 20px;"></i>
+                        Hướng dẫn</a>
                 </li>
             </ul>
         </div>
-    </nav> 
+    </nav>
+    </div>
 </body>
 <!-- JavaScript Libraries -->
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
-<script src="/lib/easing/easing.min.js"></script>
-<script src="/lib/owlcarousel/owl.carousel.min.js"></script>
-
-<!-- Contact Javascript File -->
-<script src="/mail/jqBootstrapValidation.min.js"></script>
-<script src="/mail/contact.js"></script>
 
 <!-- Template Javascript -->
-<script src="/js/main.js"></script>
 <script src="/js/course-learning.js"></script>
 
 </html>
+

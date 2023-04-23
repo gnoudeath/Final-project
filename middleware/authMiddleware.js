@@ -1,6 +1,7 @@
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
-
+const {UserLecture} = require('../models/userLecture');
+const mongoose = require('mongoose');
 const requireAuth = (req, res, next) => {
     const token = req.cookies.jwt;
 
@@ -73,35 +74,67 @@ function checkRole(allowedRoles) {
     }
 }
 
-// function checkRoleCustomer(allowedRoles) {
-//     return async function (req, res, next) {
-//         const role = res.locals.role;
-//         console.log(role)
-//         try {
-//             // Find the user's role in the Role table by objectId
-//             // let user = await User.findById(decodedToken.id).populate('role');
+const checkLectureCompletion = async (req, res, next) => {
+    const lectureId = req.query.id; // Lấy id của bài giảng từ query params
+    const userId = res.locals.user._id; // Lấy id của người dùng từ biến cục bộ res.locals
+    const courseSlug = req.params.slug;
+    // Tìm bản ghi trong UserLecture collection với điều kiện user, lecture và course tương ứng với userId, lectureId, contentId và courseId
+    const userLecture = await UserLecture.findOne({ user: userId, lecture: lectureId, courseSlug: courseSlug });
 
-//             if (!role) {
-//                 // User's role not found in the Role table, redirect to error page
-//                 return res.redirect('/error');
+    if (!userLecture) { // Nếu không tìm thấy bản ghi tương ứng trong collection
+        await UserLecture.create({ // Tạo mới bản ghi với user, lecture, course và viewedCount khởi tạo và completed = true
+            user: userId,
+            lecture: lectureId,
+            courseSlug: courseSlug,
+            completed: true,
+            viewedCount: 1
+        });
+        req.isCompleted = true; // Gán giá trị true cho thuộc tính isCompleted trong đối tượng req
+    } else if (!userLecture.completed) { // Nếu bản ghi đã tồn tại và completed = false
+        userLecture.completed = true; // Cập nhật trạng thái completed = true
+        userLecture.viewedCount += 1; // Tăng giá trị viewedCount lên 1 đơn vị
+        await userLecture.save(); // Lưu bản ghi đã được cập nhật vào collection
+        req.isCompleted = true; // Gán giá trị true cho thuộc tính isCompleted trong đối tượng req
+    } else { // Nếu bản ghi đã tồn tại và completed = true
+        req.isCompleted = true; // Gán giá trị true cho thuộc tính isCompleted trong đối tượng req
+    }
+
+    next(); // Gọi hàm middleware tiếp theo hoặc tiếp tục thực hiện middleware kế tiếp trong chuỗi middleware
+};
+
+
+
+
+// const getViewedCount = async (user, lectureId) => {
+//     try {
+//         const pipeline = [
+//             {
+//                 $match: { user: mongoose.Types.ObjectId(user), lecture: mongoose.Types.ObjectId(lectureId) }
+//             },
+//             {
+//                 $group: {
+//                     _id: { user: '$user', lecture: '$lecture' },
+//                     viewedCount: { $sum: '$viewedCount' }
+//                 }
+//             },
+//             {
+//                 $project: { _id: 0, viewedCount: 1 }
 //             }
+//         ];
 
-//             if (!allowedRoles.includes(role)) {
-//                 // User doesn't have the required role, redirect to error page
-//                 return res.redirect('/error');
-//             }
+//         const result = await UserLecture.aggregate(pipeline);
 
-//             // User has the required role, proceed to the next middleware
-//             next();
-//         } catch (err) {
-//             // Handle errors
-//             console.error(err);
-//             // res.status(500).send('Internal server error');
-//             res.redirect('/');
+//         if (result.length > 0) {
+//             return result[0].viewedCount;
+//         } else {
+//             return 0;
 //         }
+//     } catch (err) {
+//         console.error(err);
+//         return 0;
 //     }
 // }
 
 
 
-module.exports = { requireAuth, checkUser, checkRole };
+module.exports = { requireAuth, checkUser, checkRole, checkLectureCompletion };
