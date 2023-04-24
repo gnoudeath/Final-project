@@ -21,7 +21,8 @@ exports.createCourse = (req, res) => {
         descriptionCourse: formData.descriptionCourse,
         imageCourse: formData.imageCourse,
         videoIdCourse: formData.videoIdCourse,
-        costCourse: formData.costCourse
+        costCourse: formData.costCourse,
+        slug: formData.slug
     });
 
     // save course in the database

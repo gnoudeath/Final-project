@@ -60,7 +60,7 @@ exports.getCourseDetailAndContentList = (req, res) => {
 
     Course.findOne({ slug: courseSlug })
         .then(async function (courseData) {
-            // truy vấn các thông tin liên quan đến khóa học như bình thường
+            // truy vấn các thông tin liên quan đến khóa học
             const contentPromise = axios.get(`http://localhost:3000/api/contentList?id=${courseData._id}`);
             const contentData = (await contentPromise).data;
             const contentIds = contentData.map(content => content._id);
@@ -76,49 +76,11 @@ exports.getCourseDetailAndContentList = (req, res) => {
         });
 }
 
-
-
-// exports.getDetailAndContentList = (req, res) => {
-//     const courseSlug = req.params.slug;
-//     const lectureId = req.query.id;
-
-//     Course.findOne({ slug: courseSlug })
-//         .then(async function (courseData) {
-//             const contentPromise = axios.get(`http://localhost:3000/api/contentList?id=${courseData._id}`);
-//             const contentData = (await contentPromise).data;
-//             const lectureDataArray = [];
-
-//             for (const content of contentData) {
-//                 const lecturePromiseArray = axios.get(`http://localhost:3000/api/lecture?id=${content._id}`);
-//                 const lectureData = (await lecturePromiseArray).data;
-
-//                 // convert ObjectId to string
-//                 const stringifiedLectureData = lectureData.map(lecture => ({
-//                     ...lecture,
-//                     _id: lecture._id.toString()
-//                 }));
-
-//                 lectureDataArray.push(stringifiedLectureData);
-//             }
-
-//             const flattenedLectureDataArray = lectureDataArray.flat();
-
-//             const lectures = flattenedLectureDataArray.find(lecture => lecture._id === lectureId);    
-
-//             console.log(lectures)
-
-//             res.render('customer/courses/course-learning', { courses: courseData,courseContent: contentData, lectureList: lectureDataArray, lectures, layout: false });
-//         })
-//         .catch(err => {
-//             res.send(err);
-//         });
-// }
-
 exports.getDetailAndContentList = async (req, res) => {
-    const courseSlug = req.params.slug;
+    const courseSlug = req.params.slug; // Lấy id của course truy vấn từ req
     const lectureId = req.query.id;
     const userId = res.locals.user._id;
-    
+    // console.log(userId)
     try {
         const courseData = await Course.findOne({ slug: courseSlug });
         const contentPromise = axios.get(`http://localhost:3000/api/contentList?id=${courseData._id}`);
@@ -146,10 +108,13 @@ exports.getDetailAndContentList = async (req, res) => {
         const isCompleted = req.isCompleted;
 
         // Get the total viewed count for the lecture
-        const viewedCount = await getTotalViewedCount(userId, courseSlug);
+        // const viewedCount = await getTotalViewedCount(userId, courseSlug);
+        const viewedCount = (await getTotalViewedCount(userId)).find((item) => item.slug === courseSlug && item.userId.toString() === userId.toString())?.totalViewedCount || 0;
         console.log(viewedCount)
         lectures.isCompleted = isCompleted;
-        lectures.viewedCount = viewedCount;
+        lectures.totalViewedCount = viewedCount;
+
+        
 
         res.render('customer/courses/course-learning', { courses: courseData, courseContent: contentData, lectureList: lectureDataArray, lectures, layout: false });
     } catch (err) {
