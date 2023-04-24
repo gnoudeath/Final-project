@@ -59,10 +59,6 @@ async function getTotalViewedCount(userId) {
     }
 }
 
-
-
-
-
 module.exports = { UserLecture, getTotalViewedCount };
 
 
