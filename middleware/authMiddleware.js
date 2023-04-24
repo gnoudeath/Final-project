@@ -2,37 +2,41 @@ const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 const {UserLecture} = require('../models/userLecture');
 const mongoose = require('mongoose');
-const requireAuth = (req, res, next) => {
-    const token = req.cookies.jwt;
 
-    // check json web token exists & is verified
-    if (token) {
-        jwt.verify(token, 'account secret', (err, decodedToken) => {
-            if (err) {
-                console.log(err.message);
-                res.redirect('/login');
-            } else {
-                console.log(decodedToken);
-                next();
-            }
-        })
-    }
-    else {
-        res.redirect('/login');
-    }
-};
 
-// check current user
+
+
+
+// const requireAuth = (req, res, next) => {
+// const token = req.cookies.jwt;
+//     // check json web token exists & is verified
+//     if (token) {
+//         jwt.verify(token, 'account secret', (err, decodedToken) => {
+//             if (err) {
+//                 console.log(err.message);
+//                 res.redirect('/login');
+//             } else {
+//                 console.log(decodedToken);
+//                 next();
+//             }
+//         })
+//     }
+//     else {
+//         res.redirect('/login');
+//     }
+// };
+
+// Middleware kiểm tra user đăng nhập hay chưa
 const checkUser = (req, res, next) => {
-    const token = req.cookies.jwt;
+    const token = req.cookies.jwt; // Lấy token từ cookie
     res.locals.user = null;
-    res.locals.role = null;
-    if (token) {
-        jwt.verify(token, 'account secret', async (err, decodedToken) => {
-            if (err) {
+    res.locals.role = null; // Khởi tạo biến user và role cho locals để có thể truy cập từ view
+    if (token) { // Nếu tồn tại token
+        jwt.verify(token, 'account secret', async (err, decodedToken) => { // Xác thực token
+            if (err) { // Nếu có lỗi xác thực, log lỗi và tiếp tục middleware tiếp theo
                 console.log(err.message);
                 next();
-            } else {
+            } else { // Nếu xác thực thành công, lấy thông tin user từ database và gán vào locals
                 // console.log(decodedToken);
                 let user = await User.findById(decodedToken.id).populate('role');
                 res.locals.user = user;
@@ -41,7 +45,7 @@ const checkUser = (req, res, next) => {
             }
         })
     } else {
-        next();
+        next(); // Nếu không tồn tại token, tiếp tục middleware tiếp theo
     }
 }
 
@@ -137,4 +141,4 @@ const checkLectureCompletion = async (req, res, next) => {
 
 
 
-module.exports = { requireAuth, checkUser, checkRole, checkLectureCompletion };
+module.exports = { checkUser, checkRole, checkLectureCompletion };

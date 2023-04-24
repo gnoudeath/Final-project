@@ -38,11 +38,11 @@ const handleErros = (err) => {
     return errors;
 };
 
-const maxAge = 3 * 24 * 60 * 60;
-const createToken = (id, role) => {
-    return jwt.sign({ id, role }, 'account secret', {
-        expiresIn: maxAge
-    });
+const maxAge = 3 * 24 * 60 * 60; // giá trị 3 ngày, tính bằng giây
+const createToken = (id, role) => { //sử dụng thư viện jsonwebtoken để tạo token với thông tin được truyền vào id, role
+    return jwt.sign({ id, role }, 'account secret', { // sử dụng chuỗi làm chìa khóa mã hóa token
+        expiresIn: maxAge // đặt thời gian hết hạn của token
+    });// trả về chuỗi token đã được mã hóa
 };
 
 module.exports.signup_get = (req, res) => {
@@ -69,17 +69,21 @@ module.exports.signup_post = async (req, res) => {
 }
 
 module.exports.login_post = async (req, res) => {
-    const { account, password } = req.body;
+    const { account, password } = req.body; // lấy thông tin tài khoản và mật khẩu được gửi từ phía client.
     try {
         const user = await User.login(account, password);
         const role = await Role.findById(user.role);
+        // tạo token bằng id người dùng và rolename tìm được với phương thức createToken
         const token = createToken(user._id, role.roleName);
-        res.cookie('jwt', token, { httpOnly: true, maxAge: maxAge * 1000 });
+        // lưu token vào cookie đặt tên jwt và thiết lập bằng HTTP và giới hạn thời gian 3 ngày
+        res.cookie('jwt', token, { httpOnly: true, maxAge: maxAge * 1000 }); 
+        // lưu role vào cookie và thiết lập bằng HTTP và giới hạn thời gian 3 ngày
         res.cookie('role', role.roleName, { maxAge: maxAge * 1000 });
         res.status(200).json({ user: user._id });
         
     } catch (err) {
-        const errors = handleErros(err);
+        const errors = handleErros(err); //gọi hàm handleErros và truyền exception để xử lý
+        // trả về một HTTP response với mã lỗi 400 (bad request) và một object chứa các lỗi
         res.status(400).json({ errors });
     }
 };

@@ -9,7 +9,7 @@ const coursesRouters = require('./routes/coursesRouters');
 const bodyparser = require("body-parser");
 var path = require('path');
 const cookieParser = require('cookie-parser');
-const { checkUser, requireAuth } = require('./middleware/authMiddleware')
+const { checkUser } = require('./middleware/authMiddleware')
 const app = express();
 
 const expressElayouts = require('express-ejs-layouts');
