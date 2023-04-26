@@ -82,7 +82,7 @@ exports.getCourseDetailAndContentList = (req, res) => {
 }
 
 exports.getDetailAndContentList = async (req, res) => {
-    const courseSlug = req.params.slug; // lấy id của course truy vấn từ req
+    const courseSlug = req.params.slug; // lấy slug của course truy vấn từ req /course-learning/:slug
     const lectureId = req.query.id; // lấy id của lecture truy vấn từ req
     const userId = res.locals.user._id; // lấy id của user từ session
     // console.log(userId)
@@ -90,7 +90,7 @@ exports.getDetailAndContentList = async (req, res) => {
         const courseData = await Course.findOne({ slug: courseSlug }); //tìm kiếm thông tin khóa học dựa trên slug truyền vào
         const contentPromise = axios.get(`http://localhost:3000/api/contentList?id=${courseData._id}`); // lấy thông tin các content của khóa học từ API bên ngoài
         const contentData = (await contentPromise).data; // lưu trữ dữ liệu content trả về từ API
-        const lectureDataArray = [];
+        const lectureDataArray = []; // khởi tạo mảng rỗng
         for (const content of contentData) {
             const lecturePromiseArray = axios.get(`http://localhost:3000/api/lecture?id=${content._id}`); // lấy thông tin các lecture của content từ API bên ngoài
             const lectureData = (await lecturePromiseArray).data; // lưu trữ dữ liệu lecture trả về từ API
@@ -99,14 +99,14 @@ exports.getDetailAndContentList = async (req, res) => {
                 ...lecture,
                 _id: lecture._id.toString()
             }));
-            lectureDataArray.push(stringifiedLectureData); // thêm dữ liệu lecture đã chuyển đổi vào mảng dữ liệu lecture
+            lectureDataArray.push(stringifiedLectureData); // truyền dữ liệu lecture đã chuyển đổi vào mảng dữ liệu lectureDataArray rỗng đã tạo trước đó
         }
         const flattenedLectureDataArray = lectureDataArray.flat(); // chuyển đổi mảng dữ liệu lecture từ mảng lồng nhau sang mảng 1 chiều
         const lectures = flattenedLectureDataArray.find(lecture => lecture._id === lectureId); // lấy thông tin lecture tương ứng với lectureId
-        // kiểm tra xem lecture đã hoàn thành hay chưa
+        // kiểm tra xem lecture đã được xem hay chưa
         const isCompleted = req.isCompleted;
-        // lấy tổng số lần xem lecture
-        const viewedCount = (await getTotalViewedCount(userId)).find((item) => item.slug === courseSlug && item.userId.toString() === userId.toString())?.totalViewedCount || 0;
+        // lấy tổng số lần xem lecture của user và khóa học đang truy cập, nếu null thì trả về giá trị bên phải của toán tử || (ở đây là số 0)
+        const viewedCount = (await getTotalViewedCount(userId)).find((item) => item.slug === courseSlug && item.userId.toString() === userId.toString())?.totalViewedCount || 0; 
         lectures.isCompleted = isCompleted; // thêm thuộc tính isCompleted vào dữ liệu lectures
         lectures.totalViewedCount = viewedCount; // thêm thuộc tính totalViewedCount vào dữ liệu lectures
         res.render('customer/courses/course-learning', { courses: courseData, courseContent: contentData, lectureList: lectureDataArray, lectures, layout: false });
