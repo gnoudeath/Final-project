@@ -120,8 +120,65 @@ exports.getDetailAndContentList = async (req, res) => {
         const viewedCount = (await getTotalViewedCount(userId)).find((item) => item.slug === courseSlug && item.userId.toString() === userId.toString())?.totalViewedCount || 0;
         lectures.isCompleted = isCompleted; // thêm thuộc tính isCompleted vào dữ liệu lectures
         lectures.totalViewedCount = viewedCount; // thêm thuộc tính totalViewedCount vào dữ liệu lectures
-        res.render('customer/courses/course-learning', { courses: courseData, courseContent: contentData, lectureList: lectureDataArray, lectures, layout: false });
+
+        const videoIds = lectureDataArray.flatMap((lectures) => lectures.map((lecture) => lecture.VideoId));
+        // console.log(videoIds);
+        const durationsPromiseArray = videoIds.map(videoId => getCountVideo(videoId));
+        const durations = await Promise.all(durationsPromiseArray);
+
+        res.render('customer/courses/course-learning', {
+            courses: courseData,
+            courseContent: contentData,
+            lectureList: lectureDataArray,
+            lectures,
+            videoDurations: durations,
+            layout: false
+        });
     } catch (err) {
         res.send(err);
     }
 }
+
+// Trong file services
+// exports.getLectureData = async (req, res) => {
+//     const courseSlug = req.params.slug;
+//     const lectureId = req.query.id;
+//     const userId = res.locals.user._id;
+
+//     try {
+//         const courseData = await Course.findOne({ slug: courseSlug });
+//         const contentData = (await axios.get(`http://localhost:3000/api/contentList?id=${courseData._id}`)).data;
+//         const lectureDataArray = [];
+
+//         for (const content of contentData) {
+//             const lectureData = (await axios.get(`http://localhost:3000/api/lecture?id=${content._id}`)).data;
+//             const stringifiedLectureData = lectureData.map(lecture => ({
+//                 ...lecture,
+//                 _id: lecture._id.toString()
+//             }));
+//             lectureDataArray.push(stringifiedLectureData);
+//         }
+
+//         const flattenedLectureDataArray = lectureDataArray.flat();
+//         const lecture = flattenedLectureDataArray.find(lecture => lecture._id === lectureId);
+
+//         const isCompleted = req.isCompleted;
+//         const viewedCount = (await getTotalViewedCount(userId)).find((item) => item.slug === courseSlug && item.userId.toString() === userId.toString())?.totalViewedCount || 0;
+//         lecture.isCompleted = isCompleted;
+//         lecture.totalViewedCount = viewedCount;
+
+//         const videoIds = lectureDataArray.flatMap((lectures) => lectures.map((lecture) => lecture.VideoId));
+//         const durationsPromiseArray = videoIds.map(videoId => getCountVideo(videoId));
+//         const durations = await Promise.all(durationsPromiseArray);
+
+//         res.json({
+//             course: courseData,
+//             courseContent: contentData,
+//             lectureList: lectureDataArray,
+//             lecture,
+//             videoDurations: durations
+//         });
+//     } catch (err) {
+//         res.status(500).json({ error: err.message });
+//     }
+// };

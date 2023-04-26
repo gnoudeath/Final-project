@@ -53,6 +53,8 @@ router.get('/course-detail/:slug', checkRole('customer'), services.getCourseDeta
 // router.get('/course-learning/:slug', checkRole('customer'), services.getDetailAndContentList);
 router.get('/course-learning/:slug', checkRole('customer'), checkLectureCompletion, services.getDetailAndContentList);
 
+// Trong file router
+// router.get('/course-learning/:slug', checkRole('customer'), checkLectureCompletion, services.getLectureData);
 
 // router.get('/lecture', checkRole('admin'), services.lectureList);
 

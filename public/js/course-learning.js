@@ -53,6 +53,114 @@ morongTatCaButton.addEventListener('click', function () {
 document.querySelector('.morongvathunho-1').appendChild(thuNhoTatCaButton);
 
 
+const lectureLinks = document.querySelectorAll('.lecture-link');
 
 
+// document.addEventListener('DOMContentLoaded', () => {
+//     function updatePageContent(data) {
+//         const videoId = document.querySelector('#lectureData #videoId');
+//         const nameLecture = document.querySelector('#lectureData #nameLecture');
+//         const contentLecture = document.querySelector('#lectureData #contentLecture');
+//         const noteLecture = document.querySelector('#lectureData #noteLecture');
+//         const lectureId = document.querySelector('#lectureData #_id');
+
+//         console.log(videoId);
+//         console.log(nameLecture);
+//         console.log(contentLecture);
+//         console.log(noteLecture);
+//         console.log(lectureId);
+//         videoId.src = `//www.youtube.com/embed/${data.VideoId}`;
+//         nameLecture.innerHTML = data.nameLecture;
+//         contentLecture.innerHTML = data.contentLecture;
+//         noteLecture.innerHTML = data.noteLecture;
+//         lectureId.innerHTML = data._id;
+
+//         // Update URL without reloading the page
+//         const url = new URL(window.location.href);
+//         url.searchParams.set('id', data.lecture._id);
+//         window.history.pushState({}, '', url.toString());
+//     }
+
+//     const navBaiHoc = document.getElementsByClassName('nav-baihoc');
+//     for (let i = 0; i < navBaiHoc.length; i++) {
+//         navBaiHoc[i].addEventListener('click', function (event) {
+//             event.preventDefault();
+
+//             const lectureId = navBaiHoc[i].getAttribute('data-lecture-id');
+//             const courseSlug = window.courseSlug;
+//             const xhr = new XMLHttpRequest();
+//             xhr.onreadystatechange = function() {
+//                 if (this.readyState === 4 && this.status === 200) {
+//                     const responseData = this.response;
+//                     updatePageContent(responseData);
+//                 } else if (this.readyState === 4) {
+//                     console.error('Error fetching lecture data:', this.statusText);
+//                 }
+//             };
+//             xhr.open('GET', `/course-learning/${courseSlug}?id=${lectureId}`);
+//             xhr.send();
+//         });
+//     }
+// });
+
+
+
+// Hàm lấy query parameter từ url
+function getParameterByName(name, url) {
+    if (!url) url = window.location.href;
+    name = name.replace(/[\[\]]/g, '\\$&');
+    var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+        results = regex.exec(url);
+    if (!results) return null;
+    if (!results[2]) return '';
+    return decodeURIComponent(results[2].replace(/\+/g, ' '));
+}
+
+$(document).ready(function () {
+    var lectureData = $('#lectureData');
+
+    // Hàm để lấy đường dẫn URL mới
+    function getNewUrl() {
+        return window.location.pathname + '?id=' + lectureData.data('lecture-id');
+    }
+
+    // Hàm để cập nhật nội dung trong #lectureData
+    function updateLectureData() {
+        $.ajax({
+            url: getNewUrl(),
+            method: 'GET',
+            success: function (response) {
+                lectureData.html($(response).find('#lectureData').html());
+            }
+        });
+    }
+
+    // Lấy ID bài học từ query parameter trong URL và cập nhật nội dung trong #lectureData
+    var lectureId = getParameterByName('id');
+    if (lectureId) {
+        lectureData.data('lecture-id', lectureId);
+        updateLectureData();
+    }
+
+    // Sử dụng sự kiện click để chuyển đổi bài học
+    $('.lecture-link').on('click', function (event) {
+        event.preventDefault();
+
+        // Lấy ID bài học mới từ thẻ a được bấm
+        var newLectureId = $(this).data('lecture-id');
+        lectureData.data('lecture-id', newLectureId);
+
+        // Cập nhật đường dẫn URL của trang
+        history.pushState(null, null, getNewUrl());
+
+        // Thực hiện request AJAX và cập nhật nội dung trong #lectureData
+        updateLectureData();
+    });
+
+    // Sử dụng sự kiện popstate để theo dõi khi URL thay đổi
+    window.addEventListener('popstate', function () {
+        lectureData.data('lecture-id', getParameterByName('id'));
+        updateLectureData();
+    });
+});
 

@@ -11258,6 +11258,12 @@ h6,
   float: right;
 }
 
+.time-baihoc2,
+.time-baihoc1 {
+    display: inline-block;
+    margin-right: 10px;
+}
+
 .tonghop-baihoc {
   display: none;
   margin-left: 30px;
@@ -11619,7 +11625,7 @@ tr {
 
 .row-2 {
   display: flex;
-  width: 95%;
+  width: 98%;
 }
 
 .container2{
@@ -11645,6 +11651,14 @@ tr {
   margin-left: 15px;
   background-color: #d95700;
   color: white;
+}
+
+.baihocc-div2 {
+  width: 280px;
+  margin-left: 15px;
+  background-color: #d95700;
+  color: white;
+  align-items: center;
 }
 
 .class-note {
@@ -11673,5 +11687,5 @@ tr {
 }
 
 .container-fluid-1 {
-  margin-top: 66px;
+  margin-top: 57px;
 }

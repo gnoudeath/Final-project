@@ -55,10 +55,6 @@ async function getTotalVideo(durations) {
     }
 }
 
-
-
-
-
 module.exports = {
     getCountVideo, durationToSeconds, getTotalVideo
 };
