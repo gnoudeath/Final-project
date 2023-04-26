@@ -44,7 +44,7 @@
                                                                             lectureList[j][k].nameLecture %>
                                                                 </span>
                                                                 <span class="time-baihoc">
-                                                                    <%= lectureList[j][k].duration %>
+                                                                    <%= videoDurations[totalLectures - lectureList[j].length + k] %>
                                                                 </span>
                                                             </div>
                                                         </a>
@@ -64,7 +64,7 @@
                                     <li><strong>
                                             <%= totalLectures %>
                                         </strong> bài học</li>
-                                    <li><span>Thời lượng <strong>10 giờ 26 phút</strong></span></li>
+                                    <li><span>Thời lượng <strong><%= totalDuration %></strong></span></li>
                                 </ul>
                                 <div class="morongvathunho"><a class="btn" style="color: orangered;"
                                         id="morongtatca">Mở rộng tất cả</a></div>
@@ -91,7 +91,7 @@
                             <span>Tổng số <%= totalLectures %> bài học</span>
                         </li>
                         <li>
-                            <span>Thời lượng 30 giờ 26 phút</span>
+                            <span>Thời lượng <%= totalDuration %></span>
                         </li>
                         <li>
                             <span>Học mọi lúc, mọi nơi</span>

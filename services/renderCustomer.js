@@ -1,7 +1,7 @@
 const axios = require('axios');
 const Course = require('../models/courses');
 const { getTotalViewedCount } = require('../models/userLecture');
-
+const { getCountVideo, getTotalVideo } = require('../services/youtobe');
 
 exports.courseList = (req, res) => {
     axios.get('http://localhost:3000/api/courses')
@@ -72,9 +72,20 @@ exports.getCourseDetailAndContentList = (req, res) => {
             const lectureResponseArray = await Promise.all(lecturePromiseArray);
             // Lấy ra một mảng chứa thông tin của tất cả các lecture, sử dụng phương thức map để lấy dữ liệu từ mỗi phản hồi (response).
             const lectureDataArray = lectureResponseArray.map(response => response.data);
-
+            const videoIds = lectureDataArray.flatMap((lectures) => lectures.map((lecture) => lecture.VideoId));
+            // console.log(videoIds);
+            const durationsPromiseArray = videoIds.map(videoId => getCountVideo(videoId));
+            const durations = await Promise.all(durationsPromiseArray);
+            const totalDuration = await getTotalVideo(durations);
+            // console.log(totalDuration)
             // trả về dữ liệu khóa học và các thông tin liên quan
-            res.render('customer/courses/course-detail', { courses: courseData, courseContent: contentData, lectureList: lectureDataArray });
+            res.render('customer/courses/course-detail', {
+                courses: courseData,
+                courseContent: contentData,
+                lectureList: lectureDataArray,
+                videoDurations: durations,
+                totalDuration: totalDuration
+            });
         })
         .catch(err => {
             res.send(err);
@@ -106,7 +117,7 @@ exports.getDetailAndContentList = async (req, res) => {
         // kiểm tra xem lecture đã được xem hay chưa
         const isCompleted = req.isCompleted;
         // lấy tổng số lần xem lecture của user và khóa học đang truy cập, nếu null thì trả về giá trị bên phải của toán tử || (ở đây là số 0)
-        const viewedCount = (await getTotalViewedCount(userId)).find((item) => item.slug === courseSlug && item.userId.toString() === userId.toString())?.totalViewedCount || 0; 
+        const viewedCount = (await getTotalViewedCount(userId)).find((item) => item.slug === courseSlug && item.userId.toString() === userId.toString())?.totalViewedCount || 0;
         lectures.isCompleted = isCompleted; // thêm thuộc tính isCompleted vào dữ liệu lectures
         lectures.totalViewedCount = viewedCount; // thêm thuộc tính totalViewedCount vào dữ liệu lectures
         res.render('customer/courses/course-learning', { courses: courseData, courseContent: contentData, lectureList: lectureDataArray, lectures, layout: false });
@@ -114,13 +125,3 @@ exports.getDetailAndContentList = async (req, res) => {
         res.send(err);
     }
 }
-
-
-
-
-
-
-
-
-
-

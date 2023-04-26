@@ -24,4 +24,6 @@ const lectureSchema = new Schema ({
 },{ timestamps: true });
 const Lecture = mongoose.model('lecture', lectureSchema);
 
+
+
 module.exports = Lecture;

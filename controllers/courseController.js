@@ -282,13 +282,9 @@ exports.findlecture = async (req, res) => {
                 return res.status(404).send({ message: `Not found course with id ${id}` });
             }
             else {
-
                 res.send(lecture)
-
             }
-
         }
-
     } catch (error) {
         res.status(500).send({ message: error.message || "Error occurred while retrieving course information" });
     }

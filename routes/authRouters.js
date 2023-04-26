@@ -25,15 +25,15 @@ router.get('/about', checkRole('customer'), (req, res) => {
 // router.get('/course', checkRole('customer'), (req, res) => {
 //     res.render('customer/courses/course');
 // });
-router.get('/teacher', checkRole('customer'), (req, res) => {
-    res.render('customer/teacher');
-});
+// router.get('/teacher', checkRole('customer'), (req, res) => {
+//     res.render('customer/teacher');
+// });
 router.get('/blog', checkRole('customer'), (req, res) => {
     res.render('customer/blog');
 });
-router.get('/contact', checkRole('customer'), (req, res) => {
-    res.render('customer/contact');
-});
+// router.get('/contact', checkRole('customer'), (req, res) => {
+//     res.render('customer/contact');
+// });
 router.get('/single', checkRole('customer'), (req, res) => {
     res.render('customer/single');
 });
