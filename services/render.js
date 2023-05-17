@@ -30,7 +30,6 @@ exports.updateCourse = (req, res) => {
 // End Course
 
 // Course Content
-
 exports.newCourseContent = (req, res) => {
     res.render('admin/courses/newCourseContent', {id:req.query.id});
 }
@@ -91,5 +90,3 @@ exports.updateLecture = (req, res) => {
 
 
 
-
-// End Lecture

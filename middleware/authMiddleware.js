@@ -56,17 +56,14 @@ function checkRole(allowedRoles) {
         try {
             // Find the user's role in the Role table by objectId
             // let user = await User.findById(decodedToken.id).populate('role');
-
             if (!role) {
                 // User's role not found in the Role table, redirect to error page
                 return res.redirect('/error');
             }
-
             if (!allowedRoles.includes(role)) {
                 // User doesn't have the required role, redirect to error page
                 return res.redirect('/error');
             }
-
             // User has the required role, proceed to the next middleware
             next();
         } catch (err) {
@@ -84,7 +81,6 @@ const checkLectureCompletion = async (req, res, next) => {
     const courseSlug = req.params.slug;
     // Tìm bản ghi trong UserLecture collection với điều kiện user, lecture và course tương ứng với userId, lectureId, contentId và courseId
     const userLecture = await UserLecture.findOne({ user: userId, lecture: lectureId, courseSlug: courseSlug });
-
     if (!userLecture) { // Nếu không tìm thấy bản ghi tương ứng trong collection
         await UserLecture.create({ // Tạo mới bản ghi với user, lecture, course và viewedCount khởi tạo và completed = true
             user: userId,
@@ -102,7 +98,6 @@ const checkLectureCompletion = async (req, res, next) => {
     } else { // Nếu bản ghi đã tồn tại và completed = true
         req.isCompleted = true; // Gán giá trị true cho thuộc tính isCompleted trong đối tượng req
     }
-
     next(); // Gọi hàm middleware tiếp theo hoặc tiếp tục thực hiện middleware kế tiếp trong chuỗi middleware
 };
 

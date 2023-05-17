@@ -164,3 +164,37 @@ $(document).ready(function () {
     });
 });
 
+
+// document.addEventListener("DOMContentLoaded", function () {
+//     document.getElementById("commentForm").addEventListener("submit", function (event) {
+//         event.preventDefault(); // Ngăn chặn hành động mặc định của form submit
+
+//         const lectureId = document.getElementById("lectureId").value;
+//         const userId = document.getElementById("userId").value;
+//         const commentText = document.getElementById("commentText").value;
+
+//         fetch(`/course-learning/${lectureId}`, {
+//             method: "POST",
+//             headers: {
+//                 "Content-Type": "application/json"
+//             },
+//             body: JSON.stringify({ userId, commentText })
+//         })
+//             .then(response => {
+//                 if (response.ok) {
+//                     // Xử lý thành công
+//                     console.log("Comment created successfully");
+//                     // Cập nhật giao diện nếu cần
+//                 } else {
+//                     // Xử lý lỗi
+//                     console.error("Comment creation failed");
+//                 }
+//             })
+//             .catch(error => {
+//                 // Xử lý lỗi mạng
+//                 console.error("Network error:", error);
+//             });
+//     });
+
+// });
+

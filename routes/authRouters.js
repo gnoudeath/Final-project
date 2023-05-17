@@ -4,6 +4,7 @@ const { checkRole, checkLectureCompletion, getViewedCount } = require('../middle
 const courseController = require('../controllers/courseController');
 const services = require('../services/renderCustomer');
 const url = require('url');
+const { Console } = require('console');
 const router = Router();
 
 router.get('/signup', authController.signup_get);
@@ -51,7 +52,28 @@ router.get('/home', checkRole('customer'), services.courseHome);
 router.get('/course-detail/:slug', checkRole('customer'), services.getCourseDetailAndContentList);
 
 // router.get('/course-learning/:slug', checkRole('customer'), services.getDetailAndContentList);
+
+
 router.get('/course-learning/:slug', checkRole('customer'), checkLectureCompletion, services.getDetailAndContentList);
+router.post('/course-learning/:slug/create-comment', courseController.createComment);
+
+
+// router.get('/comments', checkRole('admin'), services.getCommentList);
+
+
+
+// router.post('/course-learning/:slug/comments', courseController.createComment);
+
+
+
+// router.post('/api/comment', async (req, res) => {
+//     const userId = res.locals.user._id;
+//     const lectureId = req.body.lectureId;
+//     const content = req.body.content;
+//     const comment = new Comment({ Comment: content, user: userId, lecture: lectureId });
+//     await comment.save();
+//     res.redirect(`/course-learning/${req.params.slug}?id=${lectureId}`);
+// });
 
 // Trong file router
 // router.get('/course-learning/:slug', checkRole('customer'), checkLectureCompletion, services.getLectureData);

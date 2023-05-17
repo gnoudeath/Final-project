@@ -1,6 +1,8 @@
 const Course = require('../models/courses');
 const CourseContent = require('../models/coursesContent');
 const Lecture = require('../models/lecture');
+const Comment = require('../models/commentLecture');
+const User = require('../models/User');
 const UserLecture = require('../models/userLecture');
 const checkUser = require('../middleware/authMiddleware');
 const mongoose = require('mongoose');
@@ -332,13 +334,59 @@ exports.deleteLecture = (req, res) => {
 }
 
 
-// exports.getCountLecture = async (req, res) => {
+// exports.createComment = async (req, res) => {
+//     const userId = req.user._id; // Lấy id của người dùng từ đối tượng user trong req
+//     const lectureId = req.body.lectureId; // Lấy id của bài giảng từ body của req
+//     const commentText = req.body.comment; // Lấy nội dung comment từ body của req
+
 //     try {
-//         const userId = res.locals.user._id; // lấy id của user từ biến locals
-//         const count = await UserLecture.countDocuments({ user: userId }); // đếm số lượng bài học đã xem
-//         res.status(200).json({ count });
-//     } catch (err) {
-//         console.error(err);
-//         res.status(500).json({ message: 'Internal server error' });
+//         const newComment = await Comment.create({ // Tạo một comment mới với nội dung và thông tin người dùng và bài giảng tương ứng
+//             Comment: commentText,
+//             user: userId,
+//             lecture: lectureId,
+//         });
+//         res.status(201).json({ // Trả về phản hồi thành công với dữ liệu comment vừa tạo
+//             status: 'success',
+//             data: {
+//                 comment: newComment,
+//             },
+//         });
+//     } catch (err) { // Xử lý lỗi nếu có
+//         res.status(400).json({
+//             status: 'fail',
+//             message: err.message,
+//         });
 //     }
-// }
+// };
+
+exports.createComment = async (req, res) => {
+    try {
+        const { commentText } = req.body;
+        const lectureId = req.query.id;
+        const userId = req.query.userId;
+
+        // Tạo mới comment
+        const comment = new Comment({
+            Comment: commentText,
+            user: userId,
+            lecture: lectureId
+        });
+
+        // Lưu comment vào cơ sở dữ liệu
+        await comment.save();
+
+        // Chuyển hướng người dùng về trang chủ hoặc trang khác
+        res.redirect('/');
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Internal server error' });
+    }
+};
+
+
+
+
+
+
+
+

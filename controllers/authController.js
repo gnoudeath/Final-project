@@ -55,7 +55,6 @@ module.exports.login_get = (req, res) => {
 
 module.exports.signup_post = async (req, res) => {
     const { account, password, userName, email, phone } = req.body;
-
     try {
         const customerRole = await Role.findOne({ roleName: "customer" }); // Tìm role customer trong database
         const user = await User.create({ account, password, userName, email, phone, role: customerRole._id }); // Tạo user với role là ObjectId của role customer

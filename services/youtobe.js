@@ -55,6 +55,20 @@ async function getTotalVideo(durations) {
     }
 }
 
+// async function getCompleteLecture(userLecture, videoProgress) {
+//     const videoId = userLecture.lecture.VideoId;
+//     const videoDuration = await getCountVideo(videoId);
+
+//     const totalVideoSeconds = durationToSeconds(videoDuration);
+//     const requiredSeconds = totalVideoSeconds / 2;
+
+//     if (videoProgress >= requiredSeconds) {
+//         return true;
+//     } else {
+//         return false;
+//     }
+// }
+
 module.exports = {
     getCountVideo, durationToSeconds, getTotalVideo
 };

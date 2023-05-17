@@ -45,6 +45,7 @@ router.get('/api/lectureList',courseController.findlecture)
 
 router.put('/api/updateLecture/:id', courseController.updateLecture);
 router.delete('/api/lecture/:id', courseController.deleteLecture);
-    
+
+
 
 module.exports = router;

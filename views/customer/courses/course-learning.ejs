@@ -56,7 +56,8 @@
                                     Cập nhật tháng 11 năm 2022
                                 </p>
                                 <span>
-                                    Tham gia nhóm Học lập trình tại CourseHub trên Facebook để cùng nhau trao đổi trong quá
+                                    Tham gia nhóm Học lập trình tại CourseHub trên Facebook để cùng nhau trao đổi trong
+                                    quá
                                     trình học tập ❤️
                                 </span>
                                 <br>
@@ -74,10 +75,14 @@
                             </div>
                             <br>
                         </div>
+                        <form action="/course-learning/<%= courses.slug %>/create-comment?id=<%= lectures._id %>&userId=<%= userId %>" method="POST">
+                            <input type="text" name="commentText" placeholder="Enter your comment" required>
+                            <button type="submit">Submit</button>
+                        </form>                                               
                     </div>
                 </div>
-                
-                
+
+
             </div>
             <div class="col-3 my-container3">
                 <header>
@@ -101,8 +106,8 @@
                                     <% totalLectures +=lectureList[j].length; %>
                                         <div class="tonghop-baihoc-1" id="tonghop-baihoc-<%= j %>">
                                             <% for (let k=0; k < lectureList[j].length; k++) { %>
-                                                <a
-                                                    href="/course-learning/<%= courses.slug %>?id=<%= lectureList[j][k]._id %>" class="lecture-link" data-lecture-id="<%= lectureList[j][k]._id %>">
+                                                <a href="/course-learning/<%= courses.slug %>?id=<%= lectureList[j][k]._id %>"
+                                                    class="lecture-link" data-lecture-id="<%= lectureList[j][k]._id %>">
                                                     <div class="noidung-baihoc">
                                                         <div class="baihocc-div2">
                                                             <span class="time-baihoc2">
@@ -111,9 +116,10 @@
                                                             </span>
                                                             <br>
                                                             <span class="time-baihoc1">
-                                                                <i class="fas fa-play-circle" style="color: #ae4242;"></i>
-                                                                <%= videoDurations[totalLectures -
-                                                                            lectureList[j].length + k] %>
+                                                                <i class="fas fa-play-circle"
+                                                                    style="color: #ae4242;"></i>
+                                                                <%= videoDurations[totalLectures - lectureList[j].length
+                                                                    + k] %>
                                                             </span>
                                                         </div>
                                                         <h2>
@@ -185,11 +191,18 @@
 
 <!-- Template Javascript -->
 <script src="/js/course-learning.js">
-    
+
 </script>
+
+
 
 <script>
     window.courseSlug = '<%= courses.slug %>';
+    document.addEventListener('DOMContentLoaded', function () {
+        $("#createCmt").submit(function (event) {
+            alert("Data Inserted Successfully!")
+        })
+    });
 </script>
 
 </html>

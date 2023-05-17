@@ -19,9 +19,9 @@ app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 app.set('layout', './layout/share-Layout');
 app.use(expressElayouts);
-// parse request to body-parser
+// parse request to body-parsers
 app.use(bodyparser.urlencoded({ extended : true}))
-
+app.use(bodyparser.json());
 
 
 // middleware
