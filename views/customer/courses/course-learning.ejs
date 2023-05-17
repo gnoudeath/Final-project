@@ -75,13 +75,51 @@
                             </div>
                             <br>
                         </div>
-                        <form id="commentForm"
-                            action="/course-learning/<%= courses.slug %>/create-comment?id=<%= lectures._id %>&userId=<%= userId %>"
-                            method="POST">
-                            <input type="text" name="commentText" placeholder="Enter your comment" required>
-
-                            <button type="submit">Submit</button>
-                        </form>
+                        <div class="container">
+                            <div class="be-comment-block">
+                                <h1 class="comments-title">Comments</h1>
+                                <div class="be-comment">
+                                    <% comments.forEach(comment=> { %>
+                                        <div class="be-img-comment">
+                                            <a href="">
+                                                <img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt=""
+                                                    class="be-ava-comment">
+                                            </a>
+                                        </div>
+                                        <div class="be-comment-content">
+                                            <span class="be-comment-name">
+                                                <a href="">
+                                                    <%= comment.user.userName %>
+                                                </a>
+                                            </span>
+                                            <span class="be-comment-time">
+                                                <i class="fa fa-clock-o"></i>
+                                                <% if (comment.createdAt) { const commentDate=new
+                                                    Date(comment.createdAt); const commentOptions={ timeStyle: 'short' ,
+                                                    dateStyle: 'short' }; const formattedCommentDate=new
+                                                    Intl.DateTimeFormat('en-US', commentOptions).format(commentDate); %>
+                                                    <%= formattedCommentDate %>
+                                                        <% } %>
+                                            </span>
+                                            <p class="be-comment-text">
+                                                <%= comment.Comment %>
+                                            </p>
+                                        </div>
+                                        <% }) %>
+                                </div>
+                                <form id="commentForm" class="form-block"
+                                    action="/course-learning/<%= courses.slug %>/create-comment?id=<%= lectures._id %>&userId=<%= userId %>"
+                                    method="POST">
+                                    <div class="col-xs-12">
+                                        <div class="form-group">
+                                            <input type="text" name="commentText" placeholder="Enter your comment"
+                                                required>
+                                        </div>
+                                    </div>
+                                    <button type="submit">Submit</button>
+                                </form>
+                            </div>
+                        </div>
                     </div>
                 </div>
 

@@ -118,6 +118,7 @@ $(document).on('submit', '#commentForm', function (event) {
         url: form.attr('action'),
         data: form.serialize(),
         success: function (response) {
+            console.log('Data received from server:', response);
             console.log('Comment created successfully');
             form[0].reset(); // Reset form
         },

@@ -14,7 +14,7 @@ const handleErros = (err) => {
 
     // incorrect password
     if (err.message === 'Incorrect password') {
-        errors.password = 'That account is incorrect'
+        errors.password = 'That password is incorrect'
     }
 
     //duplicate error code

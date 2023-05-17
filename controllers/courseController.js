@@ -377,7 +377,6 @@ exports.createComment = async (req, res) => {
         await comment.save();
 
         // Chuyển hướng người dùng về trang chủ hoặc trang khác
-        // res.redirect('/');
         res.status(200).json({ message: 'Comment created successfully' });
     } catch (error) {
         console.error(error);

@@ -1,7 +1,8 @@
 const axios = require('axios');
 const Course = require('../models/courses');
+const Comment = require('../models/commentLecture');
 const { getTotalViewedCount } = require('../models/userLecture');
-const { getCountVideo, getTotalVideo } = require('../services/youtobe');
+const { getCountVideo, getTotalVideo, formatTime } = require('../services/youtobe');
 
 function courseList(req, res) {
     axios.get('http://localhost:3000/api/courses')
@@ -127,6 +128,10 @@ async function getDetailAndContentList (req, res) {
         const durationsPromiseArray = videoIds.map(videoId => getCountVideo(videoId));
         const durations = await Promise.all(durationsPromiseArray);
 
+        const comments = await Comment.find({ lecture: lectureId }).populate('user', 'userName');
+        lectures.comments = comments;
+
+
         res.render('customer/courses/course-learning', {
             courses: courseData,
             courseContent: contentData,
@@ -134,6 +139,7 @@ async function getDetailAndContentList (req, res) {
             lectures,
             videoDurations: durations,
             userId: userId, // Truyền userId vào phần render
+            comments: comments,
             layout: false
         });
     } catch (err) {

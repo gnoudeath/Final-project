@@ -26,9 +26,25 @@
 </main>
 <script>
     document.addEventListener('DOMContentLoaded', function () {
-        $("#add_course").submit(function (event) {
-            alert("Data Inserted Successfully!")
-        })
+        $(document).ready(function () {
+            $("#add_course").submit(function (event) {
+                event.preventDefault(); // Prevent the default form submission behavior
+
+                $.ajax({
+                    type: $(this).attr('method'), // Get the form's HTTP method (e.g., "POST")
+                    url: $(this).attr('action'), // Get the form's action URL
+                    data: $(this).serialize(), // Serialize the form data for submission
+                    success: function () {
+                        alert("Data Inserted Successfully!");
+                    },
+                    error: function (error) {
+                        console.log('Error:', error);
+                    }
+                });
+            });
+        });
     });
+
+
 </script>
 <!-- End Main Site -->

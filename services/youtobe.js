@@ -69,6 +69,29 @@ async function getTotalVideo(durations) {
 //     }
 // }
 
+function formatTime(date) {
+    const hours = date.getHours();
+    const minutes = date.getMinutes();
+    const month = date.getMonth() + 1;
+    const day = date.getDate();
+    const year = date.getFullYear();
+
+    let time = "";
+    if (hours >= 12) {
+        time = "PM";
+    } else {
+        time = "AM";
+    }
+    if (hours > 12) {
+        hours -= 12;
+    }
+
+    const formattedDate = `${hours}:${minutes} ${time} - ${month}/${day}/${year}`;
+
+    return formattedDate;
+}
+
+
 module.exports = {
-    getCountVideo, durationToSeconds, getTotalVideo
+    getCountVideo, durationToSeconds, getTotalVideo, formatTime
 };

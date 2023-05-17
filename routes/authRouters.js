@@ -36,6 +36,9 @@ router.get('/blog', checkRole('customer'), (req, res) => {
 router.get('/single', checkRole('customer'), (req, res) => {
     res.render('customer/single');
 });
+router.get('/error', (req, res) => {
+    res.render('error');
+});
 // router.get('/course-learning', checkRole('customer'), (req, res) => {
 //     res.render('customer/courses/course-learning', { layout: false });
 // });
@@ -56,32 +59,5 @@ router.get('/course-learning/:slug', checkRole('customer'), checkLectureCompleti
 router.post('/course-learning/:slug/create-comment', courseController.createComment);
 
 
-// router.get('/comments', checkRole('admin'), services.getCommentList);
-
-
-
-// router.post('/course-learning/:slug/comments', courseController.createComment);
-
-
-
-// router.post('/api/comment', async (req, res) => {
-//     const userId = res.locals.user._id;
-//     const lectureId = req.body.lectureId;
-//     const content = req.body.content;
-//     const comment = new Comment({ Comment: content, user: userId, lecture: lectureId });
-//     await comment.save();
-//     res.redirect(`/course-learning/${req.params.slug}?id=${lectureId}`);
-// });
-
-// Trong file router
-// router.get('/course-learning/:slug', checkRole('customer'), checkLectureCompletion, services.getLectureData);
-
-// router.get('/lecture', checkRole('admin'), services.lectureList);
-
-
-
-// router.get('/api/courses', courseController.findCourse);
-// router.get('/api/contentList', courseController.findCourseContent);
-// router.get('/api/content',courseController.findContent)
 
 module.exports = router;
