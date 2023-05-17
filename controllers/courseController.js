@@ -365,18 +365,20 @@ exports.createComment = async (req, res) => {
         const lectureId = req.query.id;
         const userId = req.query.userId;
 
+        // console.log(commentText);
+
         // Tạo mới comment
         const comment = new Comment({
             Comment: commentText,
             user: userId,
             lecture: lectureId
         });
-
         // Lưu comment vào cơ sở dữ liệu
         await comment.save();
 
         // Chuyển hướng người dùng về trang chủ hoặc trang khác
-        res.redirect('/');
+        // res.redirect('/');
+        res.status(200).json({ message: 'Comment created successfully' });
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Internal server error' });

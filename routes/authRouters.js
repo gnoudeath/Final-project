@@ -1,10 +1,8 @@
 const { Router } = require('express');
 const authController = require('../controllers/authController');
-const { checkRole, checkLectureCompletion, getViewedCount } = require('../middleware/authMiddleware')
+const { checkRole, checkLectureCompletion } = require('../middleware/authMiddleware')
 const courseController = require('../controllers/courseController');
 const services = require('../services/renderCustomer');
-const url = require('url');
-const { Console } = require('console');
 const router = Router();
 
 router.get('/signup', authController.signup_get);

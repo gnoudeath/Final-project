@@ -75,10 +75,13 @@
                             </div>
                             <br>
                         </div>
-                        <form action="/course-learning/<%= courses.slug %>/create-comment?id=<%= lectures._id %>&userId=<%= userId %>" method="POST">
+                        <form id="commentForm"
+                            action="/course-learning/<%= courses.slug %>/create-comment?id=<%= lectures._id %>&userId=<%= userId %>"
+                            method="POST">
                             <input type="text" name="commentText" placeholder="Enter your comment" required>
+
                             <button type="submit">Submit</button>
-                        </form>                                               
+                        </form>
                     </div>
                 </div>
 
@@ -196,13 +199,5 @@
 
 
 
-<script>
-    window.courseSlug = '<%= courses.slug %>';
-    document.addEventListener('DOMContentLoaded', function () {
-        $("#createCmt").submit(function (event) {
-            alert("Data Inserted Successfully!")
-        })
-    });
-</script>
 
 </html>
